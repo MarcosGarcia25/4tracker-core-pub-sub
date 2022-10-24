@@ -1,0 +1,7 @@
+!.jest
+package.json
+package-lock.json
+yarn.lock
+build
+node_modules
+coverage
