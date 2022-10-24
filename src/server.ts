@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-import './app';
 dotenv.config();
+import './app';
+
 
 console.log('Consumer running');

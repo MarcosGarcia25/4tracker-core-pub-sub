@@ -1,18 +1,30 @@
 import Redis from 'ioredis';
-const client = new Redis();
+const clientPublish = new Redis({
+  port: Number(process.env.REDIS_PORT),
+  host: process.env.REDIS_HOST,
+});
 
-client.on('error', (error) => {
+const clientSubscribe = new Redis({
+  port: Number(process.env.REDIS_PORT),
+  host: process.env.REDIS_HOST,
+});
+
+clientPublish.on('error', (error) => {
+  console.error(error);
+});
+
+clientSubscribe.on('error', (error) => {
   console.error(error);
 });
 
 export async function publish(channel, value) {
-  return client.publish(channel, JSON.stringify(value));
+  return clientPublish.publish(channel, JSON.stringify(value));
 }
 
 export async function subscribe(channel, callback) {
-  client.on('message', (channel, message) => {
+  clientSubscribe.on('message', (channel, message) => {
     callback(message);
   });
 
-  client.subscribe(channel);
+  clientSubscribe.subscribe(channel);
 }
