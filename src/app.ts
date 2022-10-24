@@ -1,13 +1,7 @@
-import { PubSub } from './pub-sub';
+import { subscribe } from './providers/pubsub';
+import handlerCoordinates from './handler';
 
-export class App {
-  private pubsub: PubSub;
-
-  constructor() {
-    this.pubsub = new PubSub();
-  }
-
-  init() {
-    this.pubsub.init();
-  }
-}
+subscribe('position-tracker', async (message) => {
+  console.log(`[INFO]`, message);
+  await handlerCoordinates.execute(message);
+}).catch((error) => console.error(error));
