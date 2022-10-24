@@ -5,7 +5,7 @@ export class PubSub {
   constructor() {}
 
   async init() {
-    subscribe('position-tracker', async (message) => {
+    await subscribe('position-tracker', async (message) => {
       console.log(`[INFO]`, message);
       await handlerCoordinates.execute(message);
     });
