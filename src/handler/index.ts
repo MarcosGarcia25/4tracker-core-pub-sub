@@ -8,8 +8,8 @@ export default {
       const coordinate = JSON.parse(message);
       const coordinates: ICoordinatesPayload = {
         id: coordinate.id,
-        latitude: coordinate.y,
-        longitude: coordinate.x,
+        latitude: coordinate.latitude,
+        longitude: coordinate.longitude,
         speed: coordinate.speed,
       };
 
