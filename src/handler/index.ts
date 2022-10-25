@@ -1,5 +1,5 @@
 import { publish } from '../providers/pubsub';
-// import { PositionModel } from '../entities/position';
+import { PositionModel } from '../entities/position';
 import { ICoordinatesPayload } from './interfaces/coordinates-payload.interface';
 
 export default {
