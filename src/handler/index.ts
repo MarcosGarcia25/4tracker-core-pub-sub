@@ -13,7 +13,7 @@ export default {
         speed: coordinate.speed,
       };
 
-      // await PositionModel.create([coordinates]);
+      await PositionModel.create([coordinates]);
       await publish('position', coordinates);
 
       console.log('[INFO][COORDINATES]: ', coordinates);
