@@ -16,7 +16,7 @@ export default {
       await PositionModel.create([coordinates]);
       await publish('position', coordinates);
 
-      console.log('[INFO][COORDINATES]: ', coordinates);
+      console.log('[CORE][INFO][COORDINATES]', coordinates);
     } catch (error) {
       console.log(error);
     }
