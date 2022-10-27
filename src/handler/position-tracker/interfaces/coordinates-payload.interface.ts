@@ -3,4 +3,5 @@ export interface ICoordinatesPayload {
   latitude: string;
   longitude: string;
   speed: number;
+  companyId: string;
 }
