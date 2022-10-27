@@ -9,20 +9,22 @@ export default {
       if (coordinate?.id) {
         const tracker = await TrackerModel.findOne({ id: coordinate.id });
 
-        const coordinates: ICoordinatesPayload = {
-          latitude: coordinate.latitude,
-          longitude: coordinate.longitude,
-          speed: coordinate.speed,
-          trackerId: coordinate.id,
-          companyId: tracker?.companyId,
-          vehicleId: tracker?.vehicleId,
-          createdAt: coordinate.createdAt,
-        };
+        if (tracker) {
+          const coordinates: ICoordinatesPayload = {
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
+            speed: coordinate.speed,
+            trackerId: coordinate.id,
+            companyId: tracker?.companyId,
+            vehicleId: tracker?.vehicleId,
+            createdAt: coordinate.createdAt,
+          };
 
-        await PositionModel.create([coordinates]);
-        await publish('position', coordinates);
+          await PositionModel.create([coordinates]);
+          await publish('position', coordinates);
 
-        console.log('[CORE][INFO][COORDINATES]', coordinates);
+          console.log('[CORE][INFO][COORDINATES]', coordinates);
+        }
       }
     } catch (error) {
       console.log(error);
