@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 export const TrackerSchema = new Schema({
   identifier: String,
   companyId: String,
+  vehicleId: String,
 });
 
 export const TrackerModel = mongoose.model('Tracker', TrackerSchema);

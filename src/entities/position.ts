@@ -9,6 +9,9 @@ export const PositionSchema = new Schema({
   latitude: Number,
   longitude: Number,
   speed: Number,
+  companyId: String,
+  vehicleId: String,
+  createdAt: Date,
 });
 
 export const PositionModel = mongoose.model('Position', PositionSchema);

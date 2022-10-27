@@ -1,12 +1,11 @@
 import { publish } from '../../providers/pubsub';
 import { PositionModel } from '../../entities/position';
-import { ICoordinatesPayload } from './interfaces/coordinates-payload.interface';
+import { Decoder, ICoordinatesPayload } from './interfaces/coordinates-payload.interface';
 import { TrackerModel } from '../../entities/tracker';
 
 export default {
-  async execute(message: string) {
+  async execute(coordinate: Decoder) {
     try {
-      const coordinate = JSON.parse(message);
       if (coordinate?.id) {
         const tracker = await TrackerModel.findOne({ identifier: coordinate.id });
 
@@ -16,6 +15,8 @@ export default {
           longitude: coordinate.longitude,
           speed: coordinate.speed,
           companyId: tracker?.companyId,
+          vehicleId: tracker?.vehicleId,
+          createdAt: coordinate.createdAt,
         };
 
         await PositionModel.create([coordinates]);

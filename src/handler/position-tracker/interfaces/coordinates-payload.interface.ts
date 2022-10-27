@@ -4,4 +4,14 @@ export interface ICoordinatesPayload {
   longitude: string;
   speed: number;
   companyId: string;
+  vehicleId: string;
+  createdAt: Date;
+}
+
+export interface Decoder {
+  id: string;
+  longitude: string;
+  latitude: string;
+  speed: number;
+  createdAt: Date;
 }
