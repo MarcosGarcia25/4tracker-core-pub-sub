@@ -5,7 +5,7 @@ mongoose.connect(
 const Schema = mongoose.Schema;
 
 export const TrackerSchema = new Schema({
-  identifier: String,
+  id: String,
   companyId: String,
   vehicleId: String,
 });

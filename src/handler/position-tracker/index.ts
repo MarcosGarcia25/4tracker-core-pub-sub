@@ -7,13 +7,13 @@ export default {
   async execute(coordinate: Decoder) {
     try {
       if (coordinate?.id) {
-        const tracker = await TrackerModel.findOne({ identifier: coordinate.id });
+        const tracker = await TrackerModel.findOne({ id: coordinate.id });
 
         const coordinates: ICoordinatesPayload = {
-          id: coordinate.id,
           latitude: coordinate.latitude,
           longitude: coordinate.longitude,
           speed: coordinate.speed,
+          trackerId: coordinate.id,
           companyId: tracker?.companyId,
           vehicleId: tracker?.vehicleId,
           createdAt: coordinate.createdAt,

@@ -1,5 +1,5 @@
 export interface IUpdateTracker {
-  identifier: string;
+  id: string;
   companyId: string;
   vehicleId: string;
 }

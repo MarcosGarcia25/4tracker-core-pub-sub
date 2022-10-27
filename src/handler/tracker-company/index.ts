@@ -4,17 +4,17 @@ import { IUpdateTracker } from './interfaces/UpdateTracker.interface';
 export default {
   async execute(payload: IUpdateTracker) {
     try {
-      const tracker = await TrackerModel.findOne({ identifier: payload.identifier });
+      const tracker = await TrackerModel.findOne({ identifier: payload.id });
 
       if (tracker) {
         await TrackerModel.findOneAndUpdate(
-          { identifier: payload.identifier },
+          { id: payload.id },
           { companyId: payload.companyId, vehicleId: payload.vehicleId },
         );
       } else {
         await TrackerModel.create([
           {
-            identifier: payload.identifier,
+            id: payload.id,
             companyId: payload.companyId,
             vehicleId: payload.vehicleId,
           },
@@ -27,7 +27,7 @@ export default {
 
   async remove(payload: IUpdateTracker) {
     try {
-      await TrackerModel.deleteMany({ identifier: payload.identifier, companyId: payload.companyId });
+      await TrackerModel.deleteMany({ id: payload.id, companyId: payload.companyId });
     } catch (error) {
       console.log(error);
     }

@@ -5,7 +5,7 @@ mongoose.connect(
 );
 
 export const PositionSchema = new Schema({
-  id: String,
+  trackerId: String,
   latitude: Number,
   longitude: Number,
   speed: Number,

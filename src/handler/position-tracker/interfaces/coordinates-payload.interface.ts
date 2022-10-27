@@ -1,5 +1,5 @@
 export interface ICoordinatesPayload {
-  id: string | number;
+  trackerId: string | number;
   latitude: string;
   longitude: string;
   speed: number;
