@@ -17,6 +17,8 @@ export default {
             trackerId: coordinate.id,
             companyId: tracker?.companyId,
             vehicleId: tracker?.vehicleId,
+            vehicle: tracker.vehicle,
+            tracker: tracker.tracker,
             createdAt: coordinate.createdAt,
           };
 

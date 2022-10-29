@@ -8,6 +8,9 @@ export const TrackerSchema = new Schema({
   id: String,
   companyId: String,
   vehicleId: String,
+  trackerId: String,
+  vehicle: Object,
+  tracker: Object,
 });
 
 export const TrackerModel = mongoose.model('Tracker', TrackerSchema);

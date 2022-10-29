@@ -11,6 +11,8 @@ export const PositionSchema = new Schema({
   speed: Number,
   companyId: String,
   vehicleId: String,
+  vehicle: Object,
+  tracker: Object,
   createdAt: Date,
 });
 
