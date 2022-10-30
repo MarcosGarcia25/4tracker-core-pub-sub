@@ -13,6 +13,7 @@ export interface Vehicle {
   manufacturer: string;
   yearManufacture: string;
   color: string;
+  photo: string;
 }
 
 export interface Tracker {
