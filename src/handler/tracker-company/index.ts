@@ -1,39 +1,44 @@
 import { TrackerModel } from '../../entities/tracker';
-import { IUpdateTracker } from './interfaces/UpdateTracker.interface';
+import { ITracker } from './interfaces/Tracker.interface';
 
 export default {
-  async execute(payload: IUpdateTracker) {
-    try {
-      const tracker = await TrackerModel.findOne({ identifier: payload.id });
+  async execute(payload: ITracker) {
+    if (payload.id) {
+      try {
+        const tracker = await TrackerModel.findOne({ identifier: payload.id });
 
-      const data = {
-        companyId: payload.companyId,
-        vehicleId: payload.vehicleId,
-        trackerId: payload.trackerId,
-        vehicle: payload.vehicle,
-        tracker: payload.tracker,
-      };
+        const data = {
+          companyId: payload.companyId,
+          vehicleId: payload.vehicleId,
+          trackerId: payload.trackerId,
+          vehicle: payload.vehicle,
+          tracker: payload.tracker,
+        };
+        const key = { id: payload.id };
 
-      if (tracker) {
-        await TrackerModel.findOneAndUpdate({ id: payload.id }, data);
-      } else {
-        await TrackerModel.create([
-          {
-            id: payload.id,
-            ...data,
-          },
-        ]);
+        if (tracker) {
+          await TrackerModel.findOneAndUpdate(key, data);
+        } else {
+          await TrackerModel.create([
+            {
+              ...key,
+              ...data,
+            },
+          ]);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   },
 
-  async remove(payload: IUpdateTracker) {
-    try {
-      await TrackerModel.deleteMany({ id: payload.id, companyId: payload.companyId });
-    } catch (error) {
-      console.log(error);
+  async remove(payload: ITracker) {
+    if (payload.id) {
+      try {
+        await TrackerModel.deleteMany({ id: payload.id, companyId: payload.companyId });
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
 };

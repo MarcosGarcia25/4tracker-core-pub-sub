@@ -1,4 +1,4 @@
-export interface IUpdateTracker {
+export interface ITracker {
   id: string;
   companyId: string;
   vehicleId: string;
