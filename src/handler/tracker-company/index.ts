@@ -5,7 +5,7 @@ export default {
   async execute(payload: ITracker) {
     if (payload.id) {
       try {
-        const tracker = await TrackerModel.findOne({ identifier: payload.id });
+        const tracker = await TrackerModel.findOne({ id: payload.id });
 
         const data = {
           id: payload.id,
@@ -15,7 +15,7 @@ export default {
           vehicle: payload.vehicle ? payload.vehicle : tracker.vehicle,
           tracker: payload.tracker ? payload.tracker : tracker.tracker,
         };
-
+        
         if (tracker) {
           await this.remove(payload);
         }
@@ -30,7 +30,7 @@ export default {
   async remove(payload: ITracker) {
     if (payload.id) {
       try {
-        await TrackerModel.deleteMany({ id: payload.id, companyId: payload.companyId });
+        await TrackerModel.deleteMany({ id: payload.id });
       } catch (error) {
         console.log(error);
       }
