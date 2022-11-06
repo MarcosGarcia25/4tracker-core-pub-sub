@@ -8,9 +8,9 @@ export default {
         const tracker = await TrackerModel.findOne({ identifier: payload.id });
 
         const data = {
-          companyId: payload.companyId,
-          vehicleId: payload.vehicleId,
-          trackerId: payload.trackerId,
+          companyId: payload.companyId ? payload.companyId : tracker.companyId,
+          vehicleId: payload.vehicleId ? payload.vehicleId : tracker.vehicleId,
+          trackerId: payload.trackerId ? payload.trackerId : tracker.trackerId,
           vehicle: payload.vehicle ? payload.vehicle : tracker.vehicle,
           tracker: payload.tracker ? payload.tracker : tracker.tracker,
         };
