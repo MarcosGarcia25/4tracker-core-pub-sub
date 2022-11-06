@@ -11,8 +11,8 @@ export default {
           companyId: payload.companyId,
           vehicleId: payload.vehicleId,
           trackerId: payload.trackerId,
-          vehicle: payload.vehicle,
-          tracker: payload.tracker,
+          vehicle: payload.vehicle ? payload.vehicle : tracker.vehicle,
+          tracker: payload.tracker ? payload.tracker : tracker.tracker,
         };
         const key = { id: payload.id };
 
