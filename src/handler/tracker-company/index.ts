@@ -20,7 +20,9 @@ export default {
           await this.remove(payload);
         }
 
-        await TrackerModel.create([data]);
+        if (data.vehicle && data.tracker) {
+          await TrackerModel.create([data]);
+        }
       } catch (error) {
         console.log(error);
       }
