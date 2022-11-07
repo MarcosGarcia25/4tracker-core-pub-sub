@@ -9,13 +9,15 @@ export default {
 
         const data = {
           id: payload.id,
-          companyId: payload.companyId ? payload.companyId : tracker.companyId,
-          vehicleId: payload.vehicleId ? payload.vehicleId : tracker.vehicleId,
-          trackerId: payload.trackerId ? payload.trackerId : tracker.trackerId,
-          vehicle: payload.vehicle ? payload.vehicle : tracker.vehicle,
-          tracker: payload.tracker ? payload.tracker : tracker.tracker,
+          companyId: payload?.companyId ? payload?.companyId : tracker?.companyId,
+          vehicleId: payload.vehicleId ? payload?.vehicleId : tracker?.vehicleId,
+          trackerId: payload.trackerId ? payload?.trackerId : tracker?.trackerId,
+          vehicle: payload.vehicle ? payload.vehicle : tracker?.vehicle,
+          tracker: payload.tracker ? payload.tracker : tracker?.tracker,
         };
-        
+
+        console.log(data)
+
         if (tracker) {
           await this.remove(payload);
         }
