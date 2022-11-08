@@ -12,12 +12,6 @@ export default {
 
         const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({ _id: -1 });
 
-        console.log(journey)
-
-        const trackersHistory = journey?.vehicle?.trackersHistory?.find(
-          (history) => history.tracker.identifier === coordinate.id && history.status === 'ACTIVE',
-        );
-
         if (tracker) {
           const coordinates: ICoordinatesPayload = {
             latitude: coordinate.latitude,
@@ -28,10 +22,10 @@ export default {
             vehicleId: tracker?.vehicleId,
             vehicle: tracker.vehicle,
             tracker: tracker.tracker,
-            userId: trackersHistory ? journey?.user?.id : '',
-            journeyId: trackersHistory ? journey?.journey?.id : '',
-            user: trackersHistory ? journey?.user : {},
-            journey: trackersHistory ? journey?.journey : {},
+            userId: journey?.user ? journey?.user?.id : '',
+            journeyId: journey?.journey ? journey?.journey?.id : '',
+            user: journey?.user ? journey?.user : {},
+            journey: journey?.journey ? journey?.journey : {},
             createdAt: coordinate.createdAt,
           };
 
