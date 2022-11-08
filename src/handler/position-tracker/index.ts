@@ -10,28 +10,9 @@ export default {
       if (coordinate?.id) {
         const tracker = await TrackerModel.findOne({ id: coordinate.id });
 
-        const journey = await JourneyModel.aggregate([
-          {
-            $match: {
-              vehicleId: tracker?.vehicleId,
-            },
-          },
-          {
-            $group: {
-              id: { $last: '$_id' },
-              _id: {
-                userId: { $last: '$vehicleId' },
-                vehicleId: { $last: '$companyId' },
-              },
-              journeyId: { $last: '$journeyId' },
-              journey: { $last: '$journey' },
-              user: { $last: '$user' },
-              vehicle: { $last: '$vehicle' },
-            },
-          },
-        ])[0];
+        const journey = await JourneyModel.find({ vehicleId: tracker?.vehicleId }).sort({ _id: -1 })[0];
 
-        console.log(journey)
+        console.log(journey);
 
         if (tracker) {
           const coordinates: ICoordinatesPayload = {
