@@ -20,8 +20,8 @@ export default {
             $group: {
               id: { $last: '$_id' },
               _id: {
-                userId: '$vehicleId',
-                vehicleId: '$companyId',
+                userId: { $last: '$vehicleId' },
+                vehicleId: { $last: '$companyId' },
               },
               journeyId: { $last: '$journeyId' },
               journey: { $last: '$journey' },
