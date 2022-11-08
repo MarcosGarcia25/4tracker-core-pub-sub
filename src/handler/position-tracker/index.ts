@@ -30,8 +30,8 @@ export default {
             tracker: tracker.tracker,
             userId: trackersHistory ? journey?.user?.id : '',
             journeyId: trackersHistory ? journey?.journey?.id : '',
-            user: trackersHistory ? journey.user : {},
-            journey: trackersHistory ? journey.journey : {},
+            user: trackersHistory ? journey?.user : {},
+            journey: trackersHistory ? journey?.journey : {},
             createdAt: coordinate.createdAt,
           };
 
