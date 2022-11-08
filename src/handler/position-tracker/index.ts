@@ -31,9 +31,7 @@ export default {
           },
         ])[0];
 
-        const trackersHistory = journey?.vehicle.trackersHistory.find(
-          (history) => history.tracker.identifier === coordinate.id && history.status === 'ACTIVE',
-        );
+        console.log(journey)
 
         if (tracker) {
           const coordinates: ICoordinatesPayload = {
