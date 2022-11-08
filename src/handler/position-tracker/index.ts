@@ -10,9 +10,26 @@ export default {
       if (coordinate?.id) {
         const tracker = await TrackerModel.findOne({ id: coordinate.id });
 
-        const journey = await JourneyModel.findOne({
-          vehicleId: tracker?.vehicleId,
-        });
+        const journey = await JourneyModel.aggregate([
+          {
+            $match: {
+              vehicleId: tracker?.vehicleId,
+            },
+          },
+          {
+            $group: {
+              id: { $last: '$_id' },
+              _id: {
+                userId: { $last: '$userId' },
+                vehicleId: { $last: '$vehicleId' },
+              },
+              journeyId: { $last: '$journeyId' },
+              journey: { $last: '$journey' },
+              user: { $last: '$user' },
+              vehicle: { $last: '$vehicle' },
+            },
+          },
+        ])[0];
 
         const trackersHistory = journey.vehicle.trackersHistory.find(
           (history) => history.tracker.identifier === coordinate.id && history.status === 'ACTIVE',
