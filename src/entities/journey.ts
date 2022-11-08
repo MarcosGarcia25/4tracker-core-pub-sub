@@ -9,9 +9,11 @@ export const JourneySchema = new Schema({
   userId: String,
   journeyId: String,
   vehicleId: String,
+  companyId: String,
   journey: Object,
   user: Object,
   vehicle: Object,
+  company: Object,
 });
 
 export const JourneyModel = mongoose.model('Journey', JourneySchema);
