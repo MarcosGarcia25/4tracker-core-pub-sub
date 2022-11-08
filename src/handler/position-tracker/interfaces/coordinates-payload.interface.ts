@@ -1,4 +1,4 @@
-import { Tracker, Vehicle } from "src/handler/tracker-company/interfaces/Tracker.interface";
+import { Tracker, Vehicle } from 'src/handler/tracker-company/interfaces/Tracker.interface';
 
 export interface ICoordinatesPayload {
   trackerId: string | number;
@@ -11,7 +11,6 @@ export interface ICoordinatesPayload {
   vehicle: Vehicle;
   tracker: Tracker;
 }
-
 
 export interface Decoder {
   id: string;
