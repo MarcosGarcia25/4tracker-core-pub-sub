@@ -7,6 +7,8 @@ const Schema = mongoose.Schema;
 export const JourneySchema = new Schema({
   id: String,
   userId: String,
+  journeyId: String,
+  vehicleId: String,
   journey: Object,
   user: Object,
   vehicle: Object,

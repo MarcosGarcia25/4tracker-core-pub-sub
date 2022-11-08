@@ -1,3 +1,4 @@
+import { kStringMaxLength } from 'buffer';
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 mongoose.connect(
@@ -14,6 +15,10 @@ export const PositionSchema = new Schema({
   vehicle: Object,
   tracker: Object,
   createdAt: Date,
+  userId: String,
+  journeyId: String,
+  user: Object,
+  journey: Object,
 });
 
 export const PositionModel = mongoose.model('Position', PositionSchema);

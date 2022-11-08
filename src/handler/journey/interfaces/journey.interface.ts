@@ -3,4 +3,5 @@ export interface JourneyStart {
   userId: string;
   journey: object;
   user: object;
+  vehicle: object;
 }

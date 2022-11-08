@@ -7,9 +7,13 @@ export interface ICoordinatesPayload {
   speed: number;
   companyId: string;
   vehicleId: string;
+  userId?: string;
+  journeyId?: string;
   createdAt: Date;
   vehicle: Vehicle;
   tracker: Tracker;
+  user?: object;
+  journey?: object;
 }
 
 export interface Decoder {
