@@ -6,7 +6,6 @@ export default {
     try {
       if (payload.id) {
         await JourneyModel.deleteMany({ id: payload.id });
-
         await JourneyModel.create([payload]);
       }
     } catch (error) {

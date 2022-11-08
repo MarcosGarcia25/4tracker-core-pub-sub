@@ -10,9 +10,9 @@ export default {
       if (coordinate?.id) {
         const tracker = await TrackerModel.findOne({ id: coordinate.id });
 
-        const journey = await JourneyModel.find({ vehicleId: tracker?.vehicleId }).sort({ _id: -1 })[0];
-
-        console.log(journey);
+        const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({
+          _id: -1,
+        });
 
         if (tracker) {
           const coordinates: ICoordinatesPayload = {
