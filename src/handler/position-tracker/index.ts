@@ -12,7 +12,9 @@ export default {
 
         const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({ _id: -1 });
 
-        const trackersHistory = journey?.vehicle.trackersHistory.find(
+        console.log(journey)
+
+        const trackersHistory = journey?.vehicle?.trackersHistory?.find(
           (history) => history.tracker.identifier === coordinate.id && history.status === 'ACTIVE',
         );
 
