@@ -3,7 +3,6 @@ import { ITrackerVehicleRepository } from './interfaces/ITrackerVehicleRepositor
 
 export class TrackerVehicleRepository implements ITrackerVehicleRepository {
   async findByVehicle(vehicleId: string) {
-    console.log(vehicleId)
     return await TrackerModel.findOne({ vehicleId });
   }
 }
