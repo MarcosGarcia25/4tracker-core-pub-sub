@@ -9,6 +9,7 @@ export const CacheProvider = {
   },
 
   setEx: async (key: RedisKey, seconds: string | number, value: string | number | Buffer): Promise<any> => {
+    console.log(CONFIGURE_REDIS);
     await redis.setex(key, seconds, value);
   },
 
