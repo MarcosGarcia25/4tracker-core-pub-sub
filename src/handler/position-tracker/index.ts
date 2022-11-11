@@ -12,6 +12,8 @@ export default {
       if (coordinate?.id) {
         const tracker = await this.getTrackerById(coordinate.id);
 
+        console.log(tracker)
+
         const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({
           _id: -1,
         });
