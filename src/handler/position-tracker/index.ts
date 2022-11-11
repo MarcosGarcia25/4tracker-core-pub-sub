@@ -10,17 +10,7 @@ export default {
   async execute(coordinate: Decoder) {
     try {
       if (coordinate?.id) {
-        let tracker = null;
-        const keyCache = `tracker:${coordinate.id}`;
-
-        const trackerCache = await CacheProvider.get(keyCache);
-
-        if (trackerCache) {
-          tracker = JSON.parse(trackerCache);
-        } else {
-          tracker = await TrackerModel.findOne({ id: coordinate.id });
-          await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.FIVE_MINUTES, JSON.stringify(tracker));
-        }
+        const tracker = this.getTrackerById(coordinate.id);
 
         const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({
           _id: -1,
@@ -58,5 +48,21 @@ export default {
     } catch (error) {
       console.log(error);
     }
+  },
+
+  async getTrackerById(id: string) {
+    let tracker = null;
+    const keyCache = `tracker:${id}`;
+
+    const trackerCache = await CacheProvider.get(keyCache);
+
+    if (trackerCache) {
+      tracker = JSON.parse(trackerCache);
+    } else {
+      tracker = await TrackerModel.findOne({ id });
+      await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(tracker));
+    }
+
+    return tracker;
   },
 };
