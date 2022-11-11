@@ -54,7 +54,7 @@ export class PositionRepository implements IPositionRepository {
         $geoNear: {
           near: {
             type: 'Point',
-            coordinates: [Number(payload.longitude), Number(payload.latitude)],
+            coordinates: [Number(payload.latitude), Number(payload.longitude)],
           },
           maxDistance: Number(payload.maxDistance) || 10000,
           distanceField: 'distance',

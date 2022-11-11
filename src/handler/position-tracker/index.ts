@@ -20,7 +20,7 @@ export default {
             longitude: coordinate.longitude,
             location: {
               type: 'Point',
-              coordinates: [Number(coordinate.longitude), Number(coordinate.latitude)],
+              coordinates: [Number(coordinate.latitude), Number(coordinate.longitude)],
             },
             speed: coordinate.speed,
             trackerId: coordinate.id,
