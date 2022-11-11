@@ -15,4 +15,8 @@ export const CacheProvider = {
   get: async (key: RedisKey): Promise<string> => {
     return await redis.get(key);
   },
+
+  delete: async (key: RedisKey): Promise<number> => {
+    return await redis.del(key);
+  },
 };
