@@ -10,7 +10,9 @@ export default {
   async execute(coordinate: Decoder) {
     try {
       if (coordinate?.id) {
-        const tracker = this.getTrackerById(coordinate.id);
+        const tracker = await this.getTrackerById(coordinate.id);
+
+        console.log(tracker)
 
         const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({
           _id: -1,
