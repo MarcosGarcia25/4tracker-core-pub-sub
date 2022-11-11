@@ -3,6 +3,10 @@ import { positionController } from '../domain/position';
 
 const positionRouter = Router();
 
-positionRouter.get('/:companyId', (request, response) => positionController.getAllByCompany(request, response));
+positionRouter
+  .get('/vehicleByCompanyCoordinate', (request, response) =>
+    positionController.findDriverByCompanyAndCoordinate(request, response),
+  )
+  .get('/:companyId', (request, response) => positionController.getAllByCompany(request, response));
 
 export { positionRouter };

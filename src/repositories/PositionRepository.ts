@@ -1,6 +1,6 @@
 import { PositionModel } from '../entities/position';
 import { CacheProvider } from '../providers/cache';
-import { IPositionRepository } from './interfaces/IPositionRepository';
+import { IDriverByCompanyAndCoordinate, IPositionRepository } from './interfaces/IPositionRepository';
 
 export class PositionRepository implements IPositionRepository {
   async findByCompany(companyId: string) {
@@ -53,5 +53,58 @@ export class PositionRepository implements IPositionRepository {
     }
 
     return positions;
+  }
+
+  async findDriverByCompanyAndCoordinate(payload: IDriverByCompanyAndCoordinate) {
+    let points = await PositionModel.aggregate([
+      {
+        $geoNear: {
+          near: {
+            type: 'Point',
+            coordinates: [Number(payload.longitude), Number(payload.latitude)],
+          },
+          maxDistance: Number(payload.maxDistance) || 10000,
+          distanceField: 'distance',
+          spherical: true,
+        },
+      },
+      {
+        $match: {
+          companyId: payload.companyId,
+        },
+      },
+      {
+        $group: {
+          id: { $last: '$_id' },
+          latitude: { $last: '$latitude' },
+          longitude: { $last: '$longitude' },
+          trackerId: { $last: '$trackerId' },
+          _id: {
+            vehicleId: '$vehicleId',
+            companyId: '$companyId',
+          },
+          speed: { $last: '$speed' },
+          vehicle: { $last: '$vehicle' },
+          tracker: { $last: '$tracker' },
+          createdAt: { $last: '$createdAt' },
+          userId: { $last: '$userId' },
+          journeyId: { $last: '$journeyId' },
+          user: { $last: '$user' },
+          journey: { $last: '$journey' },
+          distance: { $last: '$distance' },
+        },
+      },
+    ]).sort({ distance: 'asc' });
+
+    points = points.map((position) => {
+      position.vehicleId = position['_id'].vehicleId;
+      position.companyId = position['_id'].companyId;
+
+      delete position['_id'];
+
+      return position;
+    });
+
+    return points;
   }
 }
