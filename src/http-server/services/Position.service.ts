@@ -10,7 +10,7 @@ export class PositionService extends BaseService implements IPositionService {
 
   async getAllByCompany(companyId: string) {
     const positions = await this.positionRepository.findByCompany(companyId);;
-    const posiitonsCache = await CacheProvider.get(`positions:company:${companyId}`);
+    // const posiitonsCache = await CacheProvider.get(`positions:company:${companyId}`);
 
     // if (posiitonsCache) {
     //   positions = JSON.parse(posiitonsCache);
