@@ -3,12 +3,23 @@ import { PositionModel } from '../../entities/position';
 import { Decoder, ICoordinatesPayload } from './interfaces/coordinates-payload.interface';
 import { TrackerModel } from '../../entities/tracker';
 import { JourneyModel } from '../../entities/journey';
+import { CacheProvider } from '../../providers/cache';
 
 export default {
   async execute(coordinate: Decoder) {
     try {
       if (coordinate?.id) {
-        const tracker = await TrackerModel.findOne({ id: coordinate.id });
+        let tracker = null;
+        const keyCache = `tracker:${coordinate.id}`;
+
+        const trackerCache = await CacheProvider.get(keyCache);
+
+        if (trackerCache) {
+          tracker = JSON.parse(trackerCache);
+        } else {
+          tracker = await TrackerModel.findOne({ id: coordinate.id });
+          await CacheProvider.setEx(keyCache, 120, JSON.stringify(tracker));
+        }
 
         const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({
           _id: -1,
