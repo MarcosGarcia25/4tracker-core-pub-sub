@@ -1,4 +1,3 @@
-import { kStringMaxLength } from 'buffer';
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 mongoose.connect(
@@ -24,6 +23,7 @@ export const PositionSchema = new Schema({
   location: {
     type: PositionPointSchema,
     required: true,
+    index: '2dsphere',
   },
   speed: Number,
   companyId: String,

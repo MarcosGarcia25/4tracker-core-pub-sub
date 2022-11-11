@@ -6,7 +6,7 @@ export class PositionRepository implements IPositionRepository {
   async findByCompany(companyId: string) {
     let positions = null;
     const keyCache = `positions:company:${companyId}`;
-    
+
     const positionsCache = await CacheProvider.get(keyCache);
 
     if (positionsCache) {
