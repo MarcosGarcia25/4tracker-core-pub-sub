@@ -40,14 +40,7 @@ export class PositionRepository implements IPositionRepository {
         },
       ]);
 
-      positions = positions.map((position) => {
-        position.vehicleId = position['_id'].vehicleId;
-        position.companyId = position['_id'].companyId;
-
-        delete position['_id'];
-
-        return position;
-      });
+      positions = this.removeKeyGroup(positions);
 
       await CacheProvider.setEx(keyCache, 60, JSON.stringify(positions));
     }
@@ -56,7 +49,7 @@ export class PositionRepository implements IPositionRepository {
   }
 
   async findDriverByCompanyAndCoordinate(payload: IDriverByCompanyAndCoordinate) {
-    let points = await PositionModel.aggregate([
+    let positions = await PositionModel.aggregate([
       {
         $geoNear: {
           near: {
@@ -96,7 +89,11 @@ export class PositionRepository implements IPositionRepository {
       },
     ]).sort({ distance: 'asc' });
 
-    points = points.map((position) => {
+    return this.removeKeyGroup(positions);
+  }
+
+  private removeKeyGroup(positions: Array<any>) {
+    return positions.map((position) => {
       position.vehicleId = position['_id'].vehicleId;
       position.companyId = position['_id'].companyId;
 
@@ -104,7 +101,5 @@ export class PositionRepository implements IPositionRepository {
 
       return position;
     });
-
-    return points;
   }
 }
