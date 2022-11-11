@@ -1,7 +1,7 @@
 import Redis from 'ioredis';
-import { CONFIGURE_REDIS } from './constants/config-redis.const';
+import { CONFIGURE_REDIS_PUBSUB } from './constants/config-redis.const';
 
-const clientPublish = new Redis(CONFIGURE_REDIS);
+const clientPublish = new Redis(CONFIGURE_REDIS_PUBSUB);
 
 export async function publish(channel, value) {
   return await clientPublish.publish(channel, JSON.stringify(value));
