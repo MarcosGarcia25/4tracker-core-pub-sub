@@ -1,5 +1,6 @@
 import { PositionModel } from '../entities/position';
 import { CacheProvider } from '../providers/cache';
+import { EXPIRATION_TIME_CACHE } from '../shared/config/cache.constant';
 import { IDriverByCompanyAndCoordinate, IPositionRepository } from './interfaces/IPositionRepository';
 
 export class PositionRepository implements IPositionRepository {
@@ -42,7 +43,7 @@ export class PositionRepository implements IPositionRepository {
 
       positions = this.removeKeyGroup(positions);
 
-      await CacheProvider.setEx(keyCache, 60, JSON.stringify(positions));
+      await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_MINUTE, JSON.stringify(positions));
     }
 
     return positions;

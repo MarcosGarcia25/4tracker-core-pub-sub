@@ -1,5 +1,4 @@
 import { BaseService } from '../../base/BaseService';
-import { CacheProvider } from '../../providers/cache';
 import { IDriverByCompanyAndCoordinate, IPositionRepository } from '../../repositories/interfaces/IPositionRepository';
 import { IPositionService } from './interfaces/IPositionService.interface';
 

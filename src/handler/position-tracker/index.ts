@@ -4,6 +4,7 @@ import { Decoder, ICoordinatesPayload } from './interfaces/coordinates-payload.i
 import { TrackerModel } from '../../entities/tracker';
 import { JourneyModel } from '../../entities/journey';
 import { CacheProvider } from '../../providers/cache';
+import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
 
 export default {
   async execute(coordinate: Decoder) {
@@ -18,7 +19,7 @@ export default {
           tracker = JSON.parse(trackerCache);
         } else {
           tracker = await TrackerModel.findOne({ id: coordinate.id });
-          await CacheProvider.setEx(keyCache, 120, JSON.stringify(tracker));
+          await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.FIVE_MINUTES, JSON.stringify(tracker));
         }
 
         const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({

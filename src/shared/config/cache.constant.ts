@@ -1,7 +1,8 @@
-const MINUTE = 1000 * 60;
+const MINUTE = 60;
 
 export const EXPIRATION_TIME_CACHE = {
   ONE_MINUTE: MINUTE * 1,
   TEN_MINUTES: MINUTE * 10,
+  FIVE_MINUTES: MINUTE * 5,
   ONE_HOUR: MINUTE * 60,
 };
