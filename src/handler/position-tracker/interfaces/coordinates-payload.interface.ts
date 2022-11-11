@@ -1,9 +1,14 @@
 import { Tracker, Vehicle } from '../../../handler/tracker-company/interfaces/Tracker.interface';
 
+export interface ILocationCoordinatesPayload {
+  type: string;
+  coordinates: Array<number>;
+}
 export interface ICoordinatesPayload {
   trackerId: string | number;
   latitude: string;
   longitude: string;
+  location: ILocationCoordinatesPayload;
   speed: number;
   companyId: string;
   vehicleId: string;

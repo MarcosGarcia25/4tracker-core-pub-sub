@@ -18,6 +18,10 @@ export default {
           const coordinates: ICoordinatesPayload = {
             latitude: coordinate.latitude,
             longitude: coordinate.longitude,
+            location: {
+              type: 'Point',
+              coordinates: [Number(coordinate.latitude), Number(coordinate.longitude)],
+            },
             speed: coordinate.speed,
             trackerId: coordinate.id,
             companyId: tracker?.companyId,
@@ -32,6 +36,8 @@ export default {
           };
 
           await PositionModel.create([coordinates]);
+
+          delete coordinates?.location?.type;
           await publish('position', coordinates);
 
           console.log('[CORE][INFO][COORDINATES]', coordinates);
