@@ -17,6 +17,7 @@ export class PositionController extends BaseController {
 
       return this.success(response, HttpStatus.OK, payload);
     } catch (error) {
+      console.log(error)
       return this.error(response, error);
     }
   }
