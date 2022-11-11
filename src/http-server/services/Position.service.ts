@@ -9,15 +9,15 @@ export class PositionService extends BaseService implements IPositionService {
   }
 
   async getAllByCompany(companyId: string) {
-    let positions = null;
+    const positions = await this.positionRepository.findByCompany(companyId);;
     const posiitonsCache = await CacheProvider.get(`positions:company:${companyId}`);
 
-    if (posiitonsCache) {
-      positions = JSON.parse(posiitonsCache);
-    } else {
-      positions = await this.positionRepository.findByCompany(companyId);
-      await CacheProvider.setEx(`positions:company:${companyId}`, 60, JSON.stringify(positions));
-    }
+    // if (posiitonsCache) {
+    //   positions = JSON.parse(posiitonsCache);
+    // } else {
+    //   positions = await this.positionRepository.findByCompany(companyId);
+    //   await CacheProvider.setEx(`positions:company:${companyId}`, 60, JSON.stringify(positions));
+    // }
 
     return positions;
   }
