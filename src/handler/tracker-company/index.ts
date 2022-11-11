@@ -23,9 +23,9 @@ export default {
         }
 
         if (data.vehicle && data.tracker) {
-          const tracker = await TrackerModel.create([data]);
+          const trackerCreated = await TrackerModel.create([data]);
           const keyCache = `tracker:${payload.id}`;
-          await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(tracker));
+          await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(trackerCreated));
         }
       } catch (error) {
         console.log(error);
