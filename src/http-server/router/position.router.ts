@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { lastVehicleByCompanyCoordinateSchema } from '../../schemas/VehicleTrackerHistory';
+import { lastVehicleByCompanyCoordinateSchema } from '../../schemas/positionTracker';
 import { positionController } from '../domain/position';
 
 const positionRouter = Router();
