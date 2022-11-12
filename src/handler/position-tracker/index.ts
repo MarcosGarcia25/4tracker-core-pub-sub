@@ -21,6 +21,8 @@ export default {
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
 
+        await PositionModel.updateMany({ vehicleId: tracker?.vehicleId }, { isNewPosition: false });
+
         if (tracker) {
           const coordinates: ICoordinatesPayload = {
             latitude: coordinate.latitude,
@@ -41,6 +43,7 @@ export default {
             user: journey?.user ? journey?.user : {},
             journey: journey?.journey ? journey?.journey : {},
             createdAt: coordinate.createdAt,
+            isNewPosition: true,
           };
 
           await PositionModel.create([coordinates]);

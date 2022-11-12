@@ -67,6 +67,7 @@ export class PositionRepository implements IPositionRepository {
       {
         $match: {
           companyId: payload.companyId,
+          isNewPosition: true,
           ...journeyStatus,
         },
       },

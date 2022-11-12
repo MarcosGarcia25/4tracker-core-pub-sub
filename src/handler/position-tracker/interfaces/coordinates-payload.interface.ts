@@ -20,6 +20,7 @@ export interface ICoordinatesPayload {
   tracker: Tracker;
   user?: object;
   journey?: object;
+  isNewPosition: boolean
 }
 
 export interface Decoder {

@@ -36,6 +36,7 @@ export const PositionSchema = new Schema({
   lastJourneyStatus: String,
   user: Object,
   journey: Object,
+  isNewPosition: Boolean
 });
 
 export const PositionModel = mongoose.model('Position', PositionSchema);
