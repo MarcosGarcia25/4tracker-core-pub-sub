@@ -50,10 +50,6 @@ export class PositionRepository implements IPositionRepository {
   }
 
   async findDriverByCompanyAndCoordinate(payload: IDriverByCompanyAndCoordinate) {
-    const filterStatus = payload.status
-      ? { 'journey.journeyHistory': { $elemMatch: { status: { $eq: payload.status } } } }
-      : null;
-
     let positions = await PositionModel.aggregate([
       {
         $geoNear: {
@@ -69,7 +65,6 @@ export class PositionRepository implements IPositionRepository {
       {
         $match: {
           companyId: payload.companyId,
-          ...filterStatus,
         },
       },
       {
