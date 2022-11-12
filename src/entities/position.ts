@@ -33,6 +33,7 @@ export const PositionSchema = new Schema({
   createdAt: Date,
   userId: String,
   journeyId: String,
+  lastJourneyStatus: String,
   user: Object,
   journey: Object,
 });

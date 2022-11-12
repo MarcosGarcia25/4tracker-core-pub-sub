@@ -50,7 +50,9 @@ export class PositionRepository implements IPositionRepository {
   }
 
   async findDriverByCompanyAndCoordinate(payload: IDriverByCompanyAndCoordinate) {
-    let positions = await PositionModel.aggregate([
+    const journeyStatus = payload.status ? { lastJourneyStatus: payload.status } : null;
+
+    const positions = await PositionModel.aggregate([
       {
         $geoNear: {
           near: {
@@ -65,6 +67,7 @@ export class PositionRepository implements IPositionRepository {
       {
         $match: {
           companyId: payload.companyId,
+          ...journeyStatus,
         },
       },
       {
@@ -83,12 +86,13 @@ export class PositionRepository implements IPositionRepository {
           createdAt: { $last: '$createdAt' },
           userId: { $last: '$userId' },
           journeyId: { $last: '$journeyId' },
+          lastJourneyStatus: { $last: '$lastJourneyStatus' },
           user: { $last: '$user' },
           journey: { $last: '$journey' },
           distance: { $last: '$distance' },
         },
       },
-    ]).sort({ distance: 'asc' });
+    ]);
 
     return this.removeKeyGroup(positions);
   }

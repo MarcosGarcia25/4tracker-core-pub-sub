@@ -11,6 +11,11 @@ const lastVehicleByCompanyCoordinateSchema = async (request: Request, response: 
     latitude: Joi.number().label('latitude').required().messages(messagesSchemas),
     longitude: Joi.string().label('longitude').required().messages(messagesSchemas),
     maxDistance: Joi.number().label('maxDistance').optional().messages(messagesSchemas),
+    status: Joi.string()
+      .label('status')
+      .valid(...Object.values(JourneyStatus))
+      .optional()
+      .messages(messagesSchemas),
   });
 
   const validate = schema.validate(request.query);

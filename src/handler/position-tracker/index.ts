@@ -16,6 +16,11 @@ export default {
           _id: -1,
         });
 
+        const lastHistoryJourney = journey?.journey?.journeyHistory?.sort(
+          // @ts-ignore
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+        );
+
         if (tracker) {
           const coordinates: ICoordinatesPayload = {
             latitude: coordinate.latitude,
@@ -32,6 +37,7 @@ export default {
             tracker: tracker.tracker,
             userId: journey?.user ? journey?.user?.id : '',
             journeyId: journey?.journey ? journey?.journey?.id : '',
+            lastJourneyStatus: journey?.journey ? lastHistoryJourney[0]?.status : '',
             user: journey?.user ? journey?.user : {},
             journey: journey?.journey ? journey?.journey : {},
             createdAt: coordinate.createdAt,

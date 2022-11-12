@@ -8,6 +8,7 @@ export interface IDriverByCompanyAndCoordinate {
   latitude: number;
   longitude: number;
   maxDistance: number;
+  status: JourneyStatus;
 }
 
 export enum JourneyStatus {
