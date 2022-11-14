@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
-mongoose.connect(
-  `${process.env.MONGODB_PROTOCOL}://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}/${process.env.MONGODB_DB}${process.env.MONGODB_ARGS}`,
-);
 
 const PositionPointSchema = new Schema({
   type: {
@@ -36,7 +33,7 @@ export const PositionSchema = new Schema({
   lastJourneyStatus: String,
   user: Object,
   journey: Object,
-  isNewPosition: Boolean
+  isNewPosition: Boolean,
 });
 
 export const PositionModel = mongoose.model('Position', PositionSchema);
