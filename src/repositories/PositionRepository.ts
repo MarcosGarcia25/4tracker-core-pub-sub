@@ -43,7 +43,7 @@ export class PositionRepository implements IPositionRepository {
 
       positions = this.removeKeyGroup(positions);
 
-      await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_MINUTE, JSON.stringify(positions));
+      await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TWO_MINUTE, JSON.stringify(positions));
     }
 
     return positions;
