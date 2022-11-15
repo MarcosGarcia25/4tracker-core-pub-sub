@@ -28,6 +28,7 @@
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
+    "prom-client": "^14.1.0",
     "rimraf": "^3.0.2",
     "supertest": "^6.3.0",
     "winston": "^3.8.2"

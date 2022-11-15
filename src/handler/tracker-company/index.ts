@@ -1,10 +1,12 @@
 import { TrackerModel } from '../../entities/tracker';
+import { pubSubTimeHistogram } from '../../metrics';
 import { CacheProvider } from '../../providers/cache';
 import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
 import { ITracker } from './interfaces/Tracker.interface';
 
 export default {
   async execute(payload: ITracker) {
+    const initRequest = new Date().getTime();
     if (payload.id) {
       try {
         const tracker = await TrackerModel.findOne({ id: payload.id });
@@ -27,6 +29,16 @@ export default {
           const keyCache = `tracker:${payload.id}`;
           await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(trackerCreated[0]));
         }
+
+        const timeRequest = new Date().getTime() - initRequest;
+
+        pubSubTimeHistogram.observe(
+          {
+            name: 'trackerCompany',
+            time: `${timeRequest}ms`,
+          },
+          timeRequest,
+        );
       } catch (error) {
         console.log(error);
       }
@@ -34,11 +46,22 @@ export default {
   },
 
   async remove(payload: ITracker) {
+    const initRequest = new Date().getTime();
     if (payload.id) {
       try {
         const keyCache = `tracker:${payload.id}`;
         await TrackerModel.deleteMany({ id: payload.id });
         await CacheProvider.delete(keyCache);
+
+        const timeRequest = new Date().getTime() - initRequest;
+
+        pubSubTimeHistogram.observe(
+          {
+            name: 'removeTrackerCompany',
+            time: `${timeRequest}ms`,
+          },
+          timeRequest,
+        );
       } catch (error) {
         console.log(error);
       }

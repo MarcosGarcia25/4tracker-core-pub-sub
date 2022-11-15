@@ -5,6 +5,7 @@ import { SubscribeService } from './subscribe-service';
 
 const app = new App(new SubscribeService());
 app.initSubscribe();
-app.initHttpServe();
+app.initHttpServer();
+app.initMetricsServer();
 
 console.log('Consumer running');

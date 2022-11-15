@@ -5,9 +5,11 @@ import { TrackerModel } from '../../entities/tracker';
 import { JourneyModel } from '../../entities/journey';
 import { CacheProvider } from '../../providers/cache';
 import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
+import { pubSubTimeHistogram } from '../../metrics';
 
 export default {
   async execute(coordinate: Decoder) {
+    const initRequest = new Date().getTime();
     try {
       if (coordinate?.id) {
         const tracker = await this.getTrackerById(coordinate.id);
@@ -51,7 +53,17 @@ export default {
           delete coordinates?.location?.type;
           await publish('position', coordinates);
 
-          console.log('[CORE][INFO][COORDINATES]', coordinates);
+          const timeRequest = new Date().getTime() - initRequest;
+
+          pubSubTimeHistogram.observe(
+            {
+              name: 'positionTracker',
+              time: `${timeRequest}ms`,
+            },
+            timeRequest,
+          );
+
+          console.log('[CORE][INFO][COORDINATES]', coordinates, `[TIME] ${timeRequest}ms`);
         }
       }
     } catch (error) {

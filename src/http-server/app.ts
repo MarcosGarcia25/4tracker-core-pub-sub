@@ -3,6 +3,7 @@ import cors from 'cors';
 import winston from 'winston';
 import expressWinston from 'express-winston';
 import { router } from './router';
+import { restResponseTimeHistogram } from '../metrics';
 
 const app = express();
 let initRequest = null;
@@ -32,6 +33,15 @@ app
         const now = new Date().getTime();
         if (request?.originalUrl) {
           const timeRequest = now - initRequest;
+          restResponseTimeHistogram.observe(
+            {
+              method: request.method,
+              route: request?.originalUrl,
+              status_code: response.statusCode,
+              time: `${timeRequest}ms`,
+            },
+            timeRequest,
+          );
         }
 
         return false;
