@@ -100,6 +100,7 @@ export class PositionRepository implements IPositionRepository {
             distance: { $last: '$distance' },
           },
         },
+        { $sort: { distance: -1 } },
       ]);
 
       positions = this.removeKeyGroup(positions);
