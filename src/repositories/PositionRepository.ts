@@ -1,6 +1,7 @@
 import { PositionModel } from '../entities/position';
 import { CacheProvider } from '../providers/cache';
 import { EXPIRATION_TIME_CACHE } from '../shared/config/cache.constant';
+import { UtilsService } from '../shared/utils/utils.service';
 import { IDriverByCompanyAndCoordinate, IPositionRepository } from './interfaces/IPositionRepository';
 
 export class PositionRepository implements IPositionRepository {
@@ -50,52 +51,62 @@ export class PositionRepository implements IPositionRepository {
   }
 
   async findDriverByCompanyAndCoordinate(payload: IDriverByCompanyAndCoordinate) {
-    const journeyStatus = payload.status ? { lastJourneyStatus: payload.status } : null;
+    const keyCache = UtilsService.buildKeyForCacheWithParams('positions:closest', payload);
 
-    const positions = await PositionModel.aggregate([
-      {
-        $geoNear: {
-          near: {
-            type: 'Point',
-            coordinates: [Number(payload.latitude), Number(payload.longitude)],
+    let positions = [];
+    const positionsCache = await CacheProvider.get(keyCache);
+    if (positionsCache) {
+      positions = JSON.parse(positionsCache);
+    } else {
+      const journeyStatus = payload.status ? { lastJourneyStatus: payload.status } : null;
+      positions = await PositionModel.aggregate([
+        {
+          $geoNear: {
+            near: {
+              type: 'Point',
+              coordinates: [Number(payload.latitude), Number(payload.longitude)],
+            },
+            maxDistance: Number(payload.maxDistance) || 10000,
+            distanceField: 'distance',
+            spherical: true,
           },
-          maxDistance: Number(payload.maxDistance) || 10000,
-          distanceField: 'distance',
-          spherical: true,
         },
-      },
-      {
-        $match: {
-          companyId: payload.companyId,
-          isNewPosition: true,
-          ...journeyStatus,
-        },
-      },
-      {
-        $group: {
-          id: { $last: '$_id' },
-          latitude: { $last: '$latitude' },
-          longitude: { $last: '$longitude' },
-          trackerId: { $last: '$trackerId' },
-          _id: {
-            vehicleId: '$vehicleId',
-            companyId: '$companyId',
+        {
+          $match: {
+            companyId: payload.companyId,
+            isNewPosition: true,
+            ...journeyStatus,
           },
-          speed: { $last: '$speed' },
-          vehicle: { $last: '$vehicle' },
-          tracker: { $last: '$tracker' },
-          createdAt: { $last: '$createdAt' },
-          userId: { $last: '$userId' },
-          journeyId: { $last: '$journeyId' },
-          lastJourneyStatus: { $last: '$lastJourneyStatus' },
-          user: { $last: '$user' },
-          journey: { $last: '$journey' },
-          distance: { $last: '$distance' },
         },
-      },
-    ]);
+        {
+          $group: {
+            id: { $last: '$_id' },
+            latitude: { $last: '$latitude' },
+            longitude: { $last: '$longitude' },
+            trackerId: { $last: '$trackerId' },
+            _id: {
+              vehicleId: '$vehicleId',
+              companyId: '$companyId',
+            },
+            speed: { $last: '$speed' },
+            vehicle: { $last: '$vehicle' },
+            tracker: { $last: '$tracker' },
+            createdAt: { $last: '$createdAt' },
+            userId: { $last: '$userId' },
+            journeyId: { $last: '$journeyId' },
+            lastJourneyStatus: { $last: '$lastJourneyStatus' },
+            user: { $last: '$user' },
+            journey: { $last: '$journey' },
+            distance: { $last: '$distance' },
+          },
+        },
+      ]);
 
-    return this.removeKeyGroup(positions);
+      positions = this.removeKeyGroup(positions);
+      await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TRIRTY_SECONDS, JSON.stringify(positions));
+    }
+
+    return positions;
   }
 
   private removeKeyGroup(positions: Array<any>) {
