@@ -58,7 +58,7 @@ export default {
         pubSubTimeHistogram.observe(
           {
             name: 'removeTrackerCompany',
-            time: `${timeRequest}ms`,
+            time: timeRequest
           },
           timeRequest,
         );
