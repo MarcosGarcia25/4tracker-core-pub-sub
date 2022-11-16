@@ -15,7 +15,7 @@ export default {
         pubSubTimeHistogram.observe(
           {
             name: 'journeyStart',
-            time: `${timeRequest}ms`,
+            time: timeRequest,
           },
           timeRequest,
         );

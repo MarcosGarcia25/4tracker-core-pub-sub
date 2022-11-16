@@ -58,7 +58,7 @@ export default {
           pubSubTimeHistogram.observe(
             {
               name: 'positionTracker',
-              time: `${timeRequest}ms`,
+              time: timeRequest,
             },
             timeRequest,
           );

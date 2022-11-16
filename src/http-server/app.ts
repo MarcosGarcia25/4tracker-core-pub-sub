@@ -38,7 +38,7 @@ app
               method: request.method,
               route: request?.originalUrl,
               status_code: response.statusCode,
-              time: `${timeRequest}ms`,
+              time: timeRequest,
             },
             timeRequest,
           );
