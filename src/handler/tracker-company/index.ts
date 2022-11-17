@@ -2,10 +2,12 @@ import { TrackerModel } from '../../entities/tracker';
 import { pubSubTimeHistogram } from '../../metrics';
 import { CacheProvider } from '../../providers/cache';
 import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
+import { ITrackerCompanyService } from './interfaces/ITrackerCompanyService.interface';
 import { ITracker } from './interfaces/Tracker.interface';
+export class TrackerCompanyService implements ITrackerCompanyService {
+  constructor() {}
 
-export default {
-  async execute(payload: ITracker) {
+  async store(payload: ITracker): Promise<void> {
     const initRequest = new Date().getTime();
     if (payload.id) {
       try {
@@ -21,7 +23,7 @@ export default {
         };
 
         if (tracker) {
-          await this.remove(payload);
+          await this.delete(payload);
         }
 
         if (data.vehicle && data.tracker) {
@@ -34,7 +36,7 @@ export default {
 
         pubSubTimeHistogram.observe(
           {
-            name: 'trackerCompany',
+            name: 'TrackerCompanyService:store',
             time: timeRequest,
           },
           timeRequest,
@@ -43,9 +45,9 @@ export default {
         console.log(error);
       }
     }
-  },
+  }
 
-  async remove(payload: ITracker) {
+  async delete(payload: ITracker): Promise<void> {
     const initRequest = new Date().getTime();
     if (payload.id) {
       try {
@@ -57,8 +59,8 @@ export default {
 
         pubSubTimeHistogram.observe(
           {
-            name: 'removeTrackerCompany',
-            time: timeRequest
+            name: 'TrackerCompanyService:delete',
+            time: timeRequest,
           },
           timeRequest,
         );
@@ -66,5 +68,5 @@ export default {
         console.log(error);
       }
     }
-  },
-};
+  }
+}

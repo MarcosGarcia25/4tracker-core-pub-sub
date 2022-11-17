@@ -1,9 +1,12 @@
 import { JourneyModel } from '../../entities/journey';
 import { pubSubTimeHistogram } from '../../metrics';
+import { IJourneyService } from './interfaces/IJourneyService.interface';
 import { JourneyStart } from './interfaces/journey.interface';
 
-export default {
-  async execute(payload: JourneyStart) {
+export class JourneyService implements IJourneyService {
+  constructor() {}
+
+  async store(payload: JourneyStart) {
     const initRequest = new Date().getTime();
     try {
       if (payload.id) {
@@ -14,7 +17,7 @@ export default {
 
         pubSubTimeHistogram.observe(
           {
-            name: 'journeyStart',
+            name: 'JourneyService:store',
             time: timeRequest,
           },
           timeRequest,
@@ -23,5 +26,5 @@ export default {
     } catch (error) {
       console.log(error);
     }
-  },
-};
+  }
+}

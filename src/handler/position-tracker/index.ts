@@ -6,9 +6,12 @@ import { JourneyModel } from '../../entities/journey';
 import { CacheProvider } from '../../providers/cache';
 import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
 import { pubSubTimeHistogram } from '../../metrics';
+import { IPositionTrackerService } from './interfaces/IPositionTrackerService.interface';
 
-export default {
-  async execute(coordinate: Decoder) {
+export class PositionTrackerService implements IPositionTrackerService {
+  constructor() {}
+
+  async store(coordinate: Decoder): Promise<void> {
     const initRequest = new Date().getTime();
     try {
       if (coordinate?.id) {
@@ -57,7 +60,7 @@ export default {
 
           pubSubTimeHistogram.observe(
             {
-              name: 'positionTracker',
+              name: 'PositionTrackerService:store',
               time: timeRequest,
             },
             timeRequest,
@@ -69,9 +72,9 @@ export default {
     } catch (error) {
       console.log(error);
     }
-  },
+  }
 
-  async getTrackerById(id: string) {
+  private async getTrackerById(id: string): Promise<any> {
     let tracker = null;
     const keyCache = `tracker:${id}`;
 
@@ -85,5 +88,5 @@ export default {
     }
 
     return tracker;
-  },
-};
+  }
+}
