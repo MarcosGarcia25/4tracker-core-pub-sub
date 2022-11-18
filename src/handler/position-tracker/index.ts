@@ -8,6 +8,7 @@ import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
 import { pubSubTimeHistogram } from '../../metrics';
 import { IPositionTrackerService } from './interfaces/IPositionTrackerService.interface';
 import { ICacheProvider } from '../../providers/cache/interfaces/ICacheProvider.interfaces';
+import { VehicleTrackerHistoryStatus } from '../tracker-company/enum/VehicleTrackerHistoryStatus.enum';
 
 export class PositionTrackerService implements IPositionTrackerService {
   constructor(private cacheProvider: ICacheProvider) {}
@@ -84,7 +85,7 @@ export class PositionTrackerService implements IPositionTrackerService {
     if (trackerCache) {
       tracker = JSON.parse(trackerCache);
     } else {
-      tracker = await TrackerModel.findOne({ id });
+      tracker = await TrackerModel.findOne({ id, status: VehicleTrackerHistoryStatus.ACTIVE });
       await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(tracker));
     }
 
