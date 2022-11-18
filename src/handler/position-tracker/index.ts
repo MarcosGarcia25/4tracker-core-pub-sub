@@ -84,7 +84,7 @@ export class PositionTrackerService implements IPositionTrackerService {
 
     if (trackerCache) {
       tracker = JSON.parse(trackerCache);
-      if (tracker.status !== VehicleTrackerHistoryStatus.INACTIVE) {
+      if (tracker.status === VehicleTrackerHistoryStatus.INACTIVE) {
         tracker = null;
       }
     } else {
