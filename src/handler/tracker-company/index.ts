@@ -24,10 +24,6 @@ export class TrackerCompanyService implements ITrackerCompanyService {
           status: payload?.status ? payload?.status : tracker?.status,
         };
 
-        if (tracker) {
-          await this.delete(payload);
-        }
-
         if (data.vehicle && data.tracker) {
           const trackerCreated = await TrackerModel.create([data]);
           const keyCache = `tracker:${payload.id}`;
