@@ -1,11 +1,12 @@
 import { TrackerModel } from '../../entities/tracker';
 import { pubSubTimeHistogram } from '../../metrics';
 import { CacheProvider } from '../../providers/cache';
+import { ICacheProvider } from '../../providers/cache/interfaces/ICacheProvider.interfaces';
 import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
 import { ITrackerCompanyService } from './interfaces/ITrackerCompanyService.interface';
 import { ITracker } from './interfaces/Tracker.interface';
 export class TrackerCompanyService implements ITrackerCompanyService {
-  constructor() {}
+  constructor(private cacheProvider: ICacheProvider) {}
 
   async store(payload: ITracker): Promise<void> {
     const initRequest = new Date().getTime();
@@ -29,7 +30,7 @@ export class TrackerCompanyService implements ITrackerCompanyService {
         if (data.vehicle && data.tracker) {
           const trackerCreated = await TrackerModel.create([data]);
           const keyCache = `tracker:${payload.id}`;
-          await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(trackerCreated[0]));
+          await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(trackerCreated[0]));
         }
 
         const timeRequest = new Date().getTime() - initRequest;
@@ -53,7 +54,7 @@ export class TrackerCompanyService implements ITrackerCompanyService {
       try {
         const keyCache = `tracker:${payload.id}`;
         await TrackerModel.deleteMany({ id: payload.id });
-        await CacheProvider.delete(keyCache);
+        await this.cacheProvider.delete(keyCache);
 
         const timeRequest = new Date().getTime() - initRequest;
 

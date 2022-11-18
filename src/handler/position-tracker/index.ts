@@ -7,9 +7,10 @@ import { CacheProvider } from '../../providers/cache';
 import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
 import { pubSubTimeHistogram } from '../../metrics';
 import { IPositionTrackerService } from './interfaces/IPositionTrackerService.interface';
+import { ICacheProvider } from '../../providers/cache/interfaces/ICacheProvider.interfaces';
 
 export class PositionTrackerService implements IPositionTrackerService {
-  constructor() {}
+  constructor(private cacheProvider: ICacheProvider) {}
 
   async store(coordinate: Decoder): Promise<void> {
     const initRequest = new Date().getTime();
@@ -78,13 +79,13 @@ export class PositionTrackerService implements IPositionTrackerService {
     let tracker = null;
     const keyCache = `tracker:${id}`;
 
-    const trackerCache = await CacheProvider.get(keyCache);
+    const trackerCache = await this.cacheProvider.get(keyCache);
 
     if (trackerCache) {
       tracker = JSON.parse(trackerCache);
     } else {
       tracker = await TrackerModel.findOne({ id });
-      await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(tracker));
+      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(tracker));
     }
 
     return tracker;

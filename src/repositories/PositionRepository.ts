@@ -1,15 +1,18 @@
 import { PositionModel } from '../entities/position';
 import { CacheProvider } from '../providers/cache';
+import { ICacheProvider } from '../providers/cache/interfaces/ICacheProvider.interfaces';
 import { EXPIRATION_TIME_CACHE } from '../shared/config/cache.constant';
 import { UtilsService } from '../shared/utils/utils.service';
 import { IDriverByCompanyAndCoordinate, IPositionRepository } from './interfaces/IPositionRepository';
 
 export class PositionRepository implements IPositionRepository {
+  constructor(private cacheProvider: ICacheProvider) {}
+
   async findByCompany(companyId: string) {
     let positions = null;
     const keyCache = `positions:company:${companyId}`;
 
-    const positionsCache = await CacheProvider.get(keyCache);
+    const positionsCache = await this.cacheProvider.get(keyCache);
 
     if (positionsCache) {
       positions = JSON.parse(positionsCache);
@@ -44,7 +47,7 @@ export class PositionRepository implements IPositionRepository {
 
       positions = this.removeKeyGroup(positions);
 
-      await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TWO_MINUTE, JSON.stringify(positions));
+      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TWO_MINUTE, JSON.stringify(positions));
     }
 
     return positions;
@@ -54,7 +57,7 @@ export class PositionRepository implements IPositionRepository {
     const keyCache = UtilsService.buildKeyForCacheWithParams('positions:closest', payload);
 
     let positions = [];
-    const positionsCache = await CacheProvider.get(keyCache);
+    const positionsCache = await this.cacheProvider.get(keyCache);
     if (positionsCache) {
       positions = JSON.parse(positionsCache);
     } else {
@@ -104,7 +107,7 @@ export class PositionRepository implements IPositionRepository {
       ]);
 
       positions = this.removeKeyGroup(positions);
-      await CacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TRIRTY_SECONDS, JSON.stringify(positions));
+      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TRIRTY_SECONDS, JSON.stringify(positions));
     }
 
     return positions;
