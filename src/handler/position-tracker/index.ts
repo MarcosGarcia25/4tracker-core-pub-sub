@@ -8,7 +8,7 @@ import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
 import { pubSubTimeHistogram } from '../../metrics';
 import { IPositionTrackerService } from './interfaces/IPositionTrackerService.interface';
 import { ICacheProvider } from '../../providers/cache/interfaces/ICacheProvider.interfaces';
-import { VehicleTrackerHistoryStatus } from '../tracker-company/enum/VehicleTrackerHistoryStatus.enum';
+import { VehicleTrackerHistoryStatus } from '../tracker-company/interfaces/Tracker.interface';
 
 export class PositionTrackerService implements IPositionTrackerService {
   constructor(private cacheProvider: ICacheProvider) {}

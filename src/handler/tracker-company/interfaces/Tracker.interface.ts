@@ -1,5 +1,3 @@
-import { VehicleTrackerHistoryStatus } from '../enum/VehicleTrackerHistoryStatus.enum';
-
 export interface ITracker {
   id: string;
   companyId: string;
@@ -24,4 +22,9 @@ export interface Tracker {
   identifier: string;
   manufacturer: string;
   model: string;
+}
+
+export enum VehicleTrackerHistoryStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
 }

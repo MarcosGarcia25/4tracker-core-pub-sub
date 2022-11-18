@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { VehicleTrackerHistoryStatus } from '../handler/tracker-company/enum/VehicleTrackerHistoryStatus.enum';
+import { VehicleTrackerHistoryStatus } from '../handler/tracker-company/interfaces/Tracker.interface';
 const Schema = mongoose.Schema;
 
 export const TrackerSchema = new Schema({
