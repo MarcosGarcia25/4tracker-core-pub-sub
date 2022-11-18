@@ -21,6 +21,7 @@ export class TrackerCompanyService implements ITrackerCompanyService {
           trackerId: payload?.trackerId ? payload?.trackerId : tracker?.trackerId,
           vehicle: payload?.vehicle ? payload?.vehicle : tracker?.vehicle,
           tracker: payload?.tracker ? payload?.tracker : tracker?.tracker,
+          status: payload?.status ? payload?.status : tracker?.status,
         };
 
         if (tracker) {
