@@ -54,7 +54,7 @@ export class TrackerCompanyService implements ITrackerCompanyService {
     if (payload.id) {
       try {
         const keyCache = `tracker:${payload.id}`;
-        await TrackerModel.deleteMany({ id: payload.id });
+        await TrackerModel.deleteMany({ id: payload.id, status: VehicleTrackerHistoryStatus.ACTIVE });
         await this.cacheProvider.delete(keyCache);
 
         const timeRequest = new Date().getTime() - initRequest;
