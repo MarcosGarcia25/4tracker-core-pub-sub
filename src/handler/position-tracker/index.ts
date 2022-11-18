@@ -83,8 +83,9 @@ export class PositionTrackerService implements IPositionTrackerService {
     const trackerCache = await this.cacheProvider.get(keyCache);
 
     if (trackerCache) {
+      tracker = JSON.parse(trackerCache);
       if (tracker.status !== VehicleTrackerHistoryStatus.INACTIVE) {
-        tracker = JSON.parse(trackerCache);
+        tracker = null;
       }
     } else {
       tracker = await TrackerModel.findOne({ id, status: VehicleTrackerHistoryStatus.ACTIVE });
