@@ -4,7 +4,7 @@ import { CacheProvider } from '../../providers/cache';
 import { ICacheProvider } from '../../providers/cache/interfaces/ICacheProvider.interfaces';
 import { EXPIRATION_TIME_CACHE } from '../../shared/config/cache.constant';
 import { ITrackerCompanyService } from './interfaces/ITrackerCompanyService.interface';
-import { ITracker } from './interfaces/Tracker.interface';
+import { ITracker, VehicleTrackerHistoryStatus } from './interfaces/Tracker.interface';
 export class TrackerCompanyService implements ITrackerCompanyService {
   constructor(private cacheProvider: ICacheProvider) {}
 
@@ -23,6 +23,10 @@ export class TrackerCompanyService implements ITrackerCompanyService {
           tracker: payload?.tracker ? payload?.tracker : tracker?.tracker,
           status: payload?.status ? payload?.status : tracker?.status,
         };
+
+        if (tracker && payload?.status === VehicleTrackerHistoryStatus.ACTIVE) {
+          await this.delete(payload);
+        }
 
         if (data.vehicle && data.tracker) {
           const trackerCreated = await TrackerModel.create([data]);
