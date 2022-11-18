@@ -25,7 +25,7 @@ export class TrackerCompanyService implements ITrackerCompanyService {
         };
 
         if (tracker && payload?.status === VehicleTrackerHistoryStatus.ACTIVE) {
-          await this.delete(payload);
+          await this.delete(payload, payload?.status);
         }
 
         if (data.vehicle && data.tracker) {
@@ -49,12 +49,14 @@ export class TrackerCompanyService implements ITrackerCompanyService {
     }
   }
 
-  async delete(payload: ITracker): Promise<void> {
+  async delete(payload: ITracker, status: VehicleTrackerHistoryStatus): Promise<void> {
     const initRequest = new Date().getTime();
     if (payload.id) {
       try {
         const keyCache = `tracker:${payload.id}`;
-        await TrackerModel.deleteMany({ id: payload.id, status: VehicleTrackerHistoryStatus.ACTIVE });
+        const statusFilter = status ? { status } : null;
+        
+        await TrackerModel.deleteMany({ id: payload.id, ...statusFilter });
         await this.cacheProvider.delete(keyCache);
 
         const timeRequest = new Date().getTime() - initRequest;

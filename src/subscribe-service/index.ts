@@ -31,15 +31,6 @@ export class SubscribeService {
       .catch(console.error);
   }
 
-  async removeTrackerCompany() {
-    subscribe(new Redis(CONFIGURE_REDIS_PUBSUB), KeysChannelPubSub.REMOVE_TRACKER_COMPANY, async (payload) => {
-      console.log(KeysChannelPubSub.REMOVE_TRACKER_COMPANY, payload);
-      await this.trackerCompanyService.delete(JSON.parse(payload));
-    })
-      .then(() => console.log('Subscribe Remove Tracker Company running'))
-      .catch(console.error);
-  }
-
   async journeyStart() {
     subscribe(new Redis(CONFIGURE_REDIS_PUBSUB), KeysChannelPubSub.JOURNEY_START, async (payload) => {
       console.log(KeysChannelPubSub.JOURNEY_START, payload);
