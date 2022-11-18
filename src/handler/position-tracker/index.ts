@@ -19,18 +19,18 @@ export class PositionTrackerService implements IPositionTrackerService {
       if (coordinate?.id) {
         const tracker = await this.getTrackerById(coordinate.id);
 
-        const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({
-          _id: -1,
-        });
-
-        const lastHistoryJourney = journey?.journey?.journeyHistory?.sort(
-          // @ts-ignore
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-        );
-
-        await PositionModel.updateMany({ vehicleId: tracker?.vehicleId }, { isNewPosition: false });
-
         if (tracker) {
+          const journey = await JourneyModel.findOne({ vehicleId: tracker?.vehicleId }).sort({
+            _id: -1,
+          });
+
+          const lastHistoryJourney = journey?.journey?.journeyHistory?.sort(
+            // @ts-ignore
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+          );
+
+          await PositionModel.updateMany({ vehicleId: tracker?.vehicleId }, { isNewPosition: false });
+
           const coordinates: ICoordinatesPayload = {
             latitude: coordinate.latitude,
             longitude: coordinate.longitude,
