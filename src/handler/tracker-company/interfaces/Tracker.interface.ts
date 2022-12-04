@@ -20,8 +20,12 @@ export interface Vehicle {
 export interface Tracker {
   id: string;
   identifier: string;
-  manufacturer: string;
+  device: Device;
+}
+
+export interface Device {
   model: string;
+  manufacturer: string;
 }
 
 export enum VehicleTrackerHistoryStatus {
