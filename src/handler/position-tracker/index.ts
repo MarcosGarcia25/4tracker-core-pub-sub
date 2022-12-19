@@ -82,9 +82,11 @@ export class PositionTrackerService implements IPositionTrackerService {
 
     const trackerCache = await this.cacheProvider.get(keyCache);
 
+    console.log(trackerCache)
+
     if (trackerCache) {
       tracker = JSON.parse(trackerCache);
-      if (tracker.status === VehicleTrackerHistoryStatus.INACTIVE) {
+      if (tracker?.status === VehicleTrackerHistoryStatus.INACTIVE) {
         tracker = null;
       }
     } else {
