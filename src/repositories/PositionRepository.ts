@@ -43,6 +43,7 @@ export class PositionRepository implements IPositionRepository {
             journey: { $last: '$journey' },
           },
         },
+        { $sort: { createdAt: -1 } },
       ]);
 
       positions = this.removeKeyGroup(positions);
