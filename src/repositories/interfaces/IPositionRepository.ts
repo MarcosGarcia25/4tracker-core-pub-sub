@@ -1,6 +1,7 @@
 export interface IPositionRepository {
   findByCompany(companyId: string);
   findDriverByCompanyAndCoordinate(payload: IDriverByCompanyAndCoordinate);
+  findDriversByCompany(companyId: string);
 }
 
 export interface IDriverByCompanyAndCoordinate {

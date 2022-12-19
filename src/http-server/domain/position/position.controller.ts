@@ -21,8 +21,21 @@ export class PositionController extends BaseController {
     }
   }
 
+  async getAllDriversByCompany(request: Request, response: Response): Promise<Response> {
+    const companyId = request.params.companyId;
+
+    try {
+      const payload = await this.positionService.getAllDriversByCompany(companyId);
+
+      return this.success(response, HttpStatus.OK, payload);
+    } catch (error) {
+      return this.error(response, error);
+    }
+  }
+
   async findDriverByCompanyAndCoordinate(request: Request, response: Response): Promise<Response> {
-    const { companyId, latitude, longitude, maxDistance, status } = request.query as unknown as IDriverByCompanyAndCoordinate;
+    const { companyId, latitude, longitude, maxDistance, status } =
+      request.query as unknown as IDriverByCompanyAndCoordinate;
 
     try {
       const payload = await this.positionService.findDriverByCompanyAndCoordinate({
@@ -30,7 +43,7 @@ export class PositionController extends BaseController {
         latitude,
         longitude,
         maxDistance,
-        status
+        status,
       });
 
       return this.success(response, HttpStatus.OK, payload);

@@ -8,6 +8,7 @@ positionRouter
   .get('/vehicleByCompanyCoordinate/last', lastVehicleByCompanyCoordinateSchema, (request, response) =>
     positionController.findDriverByCompanyAndCoordinate(request, response),
   )
-  .get('/:companyId', (request, response) => positionController.getAllByCompany(request, response));
+  .get('/:companyId', (request, response) => positionController.getAllByCompany(request, response))
+  .get('/drivers/:companyId', (request, response) => positionController.getAllDriversByCompany(request, response));
 
 export { positionRouter };

@@ -14,4 +14,8 @@ export class PositionService extends BaseService implements IPositionService {
   async findDriverByCompanyAndCoordinate(payload: IDriverByCompanyAndCoordinate) {
     return await this.positionRepository.findDriverByCompanyAndCoordinate(payload);
   }
+
+  async getAllDriversByCompany(companyId: string) {
+    return await this.positionRepository.findDriversByCompany(companyId);
+  }
 }

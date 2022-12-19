@@ -3,4 +3,5 @@ import { IDriverByCompanyAndCoordinate } from '../../../repositories/interfaces/
 export interface IPositionService {
   getAllByCompany(companyId: string);
   findDriverByCompanyAndCoordinate(payload: IDriverByCompanyAndCoordinate);
+  getAllDriversByCompany(companyId: string);
 }

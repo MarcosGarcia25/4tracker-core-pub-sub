@@ -113,10 +113,56 @@ export class PositionRepository implements IPositionRepository {
     return positions;
   }
 
+  async findDriversByCompany(companyId: string) {
+    let positions = null;
+    const keyCache = `positions:drivers:company:${companyId}`;
+
+    const positionsCache = await this.cacheProvider.get(keyCache);
+
+    if (positionsCache) {
+      positions = JSON.parse(positionsCache);
+    } else {
+      positions = await PositionModel.aggregate([
+        {
+          $match: {
+            companyId,
+          },
+        },
+        {
+          $group: {
+            id: { $last: '$_id' },
+            latitude: { $last: '$latitude' },
+            longitude: { $last: '$longitude' },
+            trackerId: { $last: '$trackerId' },
+            _id: {
+              userId: '$userId',
+              companyId: '$companyId',
+            },
+            vehicleId: { $last: '$vehicleId' },
+            speed: { $last: '$speed' },
+            vehicle: { $last: '$vehicle' },
+            tracker: { $last: '$tracker' },
+            createdAt: { $last: '$createdAt' },
+            journeyId: { $last: '$journeyId' },
+            user: { $last: '$user' },
+            journey: { $last: '$journey' },
+          },
+        },
+      ]);
+
+      positions = this.removeKeyGroup(positions);
+
+      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TWO_MINUTE, JSON.stringify(positions));
+    }
+
+    return positions;
+  }
+
   private removeKeyGroup(positions: Array<any>) {
     return positions.map((position) => {
-      position.vehicleId = position['_id'].vehicleId;
-      position.companyId = position['_id'].companyId;
+      if (position['_id'].vehicleId) position.vehicleId = position['_id'].vehicleId;
+      if (position['_id'].companyId) position.companyId = position['_id'].companyId;
+      if (position['_id'].userId) position.userId = position['_id'].userId;
 
       delete position['_id'];
 
