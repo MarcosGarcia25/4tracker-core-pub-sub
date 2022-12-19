@@ -126,6 +126,10 @@ export class PositionRepository implements IPositionRepository {
         {
           $match: {
             companyId,
+            user: {
+              $exists: true,
+              $ne: null,
+            },
           },
         },
         {
