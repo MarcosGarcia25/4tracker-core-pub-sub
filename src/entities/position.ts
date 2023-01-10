@@ -34,7 +34,7 @@ export const PositionSchema = new Schema({
   user: Object,
   journey: Object,
   isNewPosition: Boolean,
-  timestamp: String,
+  timestamp: Date,
 });
 
 export const PositionModel = mongoose.model('Position', PositionSchema);

@@ -20,7 +20,7 @@ export interface ICoordinatesPayload {
   tracker: Tracker;
   user?: object;
   journey?: object;
-  timestamp: string;
+  timestamp: Date;
   isNewPosition: boolean
 }
 
