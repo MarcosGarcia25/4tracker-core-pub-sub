@@ -50,6 +50,7 @@ export class PositionTrackerService implements IPositionTrackerService {
             user: journey?.user ? journey?.user : {},
             journey: journey?.journey ? journey?.journey : {},
             createdAt: coordinate.createdAt,
+            timestamp: coordinate.timestamp,
             isNewPosition: true,
           };
 

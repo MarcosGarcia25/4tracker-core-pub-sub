@@ -20,6 +20,7 @@ export interface ICoordinatesPayload {
   tracker: Tracker;
   user?: object;
   journey?: object;
+  timestamp: string;
   isNewPosition: boolean
 }
 
@@ -28,5 +29,6 @@ export interface Decoder {
   longitude: string;
   latitude: string;
   speed: number;
+  timestamp: string;
   createdAt: Date;
 }
