@@ -37,8 +37,8 @@ export class PermissionMiddleware {
 
     if (userLogged) return await next();
     else
-      return response.status(HttpStatus.FORBIDDEN).json({
-        code: ErrorCode.AUTHENTICATION_FORBIDDEN,
+      return response.status(HttpStatus.UNAUTHORIZED).json({
+        code: ErrorCode.AUTHENTICATION_UNAUTHORIZED,
         message: 'Não autenticado',
       });
   }
