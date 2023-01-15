@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { IPositionService } from '../../services/interfaces/IPositionService.interface';
 import { BaseController } from '../../../base/BaseController';
 import { HttpStatus } from '../../../shared/enum/HttpStatus.enum';
-import { IDriverByCompanyAndCoordinate } from '../../../repositories/interfaces/IPositionRepository';
 import { IJourneyService } from '../../services/interfaces/IJourneyService.interface';
 
 export class JourneyController extends BaseController {

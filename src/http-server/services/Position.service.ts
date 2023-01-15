@@ -1,5 +1,6 @@
 import { BaseService } from '../../base/BaseService';
-import { IDriverByCompanyAndCoordinate, IPositionRepository } from '../../repositories/interfaces/IPositionRepository';
+import { IPositionRepository } from '../../repositories/interfaces/IPositionRepository';
+import { IDriverByCompanyAndCoordinate } from '../domain/position/interfaces';
 import { IPositionService } from './interfaces/IPositionService.interface';
 
 export class PositionService extends BaseService implements IPositionService {
