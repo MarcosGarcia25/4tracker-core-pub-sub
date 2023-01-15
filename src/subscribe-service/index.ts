@@ -38,7 +38,7 @@ export class SubscribeService {
       console.log(KeysChannelPubSub.TRACKER_DEVICE, payload);
       await this.trackerDeviceService.update(JSON.parse(payload));
     })
-      .then(() => console.log('Subscribe Tracker Company running'))
+      .then(() => console.log('Subscribe Tracker Device running'))
       .catch(console.error);
   }
 
