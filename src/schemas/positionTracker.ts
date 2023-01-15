@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import messagesSchemas from './constants/messagesSchemas.constant';
 import { ErrorCode } from '../shared/enum/ErrorCode.enum';
 import { HttpStatus } from '../shared/enum/HttpStatus.enum';
-import { JourneyStatus } from '../repositories/interfaces/IPositionRepository';
+import { JourneyStatus } from '../http-server/domain/position/interfaces';
 
 const lastVehicleByCompanyCoordinateSchema = async (request: Request, response: Response, next: NextFunction) => {
   const schema = Joi.object().keys({

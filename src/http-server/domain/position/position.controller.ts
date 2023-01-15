@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { IPositionService } from '../../services/interfaces/IPositionService.interface';
 import { BaseController } from '../../../base/BaseController';
 import { HttpStatus } from '../../../shared/enum/HttpStatus.enum';
-import { IDriverByCompanyAndCoordinate } from '../../../repositories/interfaces/IPositionRepository';
+import { IDriverByCompanyAndCoordinate } from './interfaces';
 
 export class PositionController extends BaseController {
   constructor(private positionService: IPositionService) {

@@ -1,4 +1,4 @@
-import { IDriverByCompanyAndCoordinate } from '../../../repositories/interfaces/IPositionRepository';
+import { IDriverByCompanyAndCoordinate } from "../../domain/position/interfaces";
 
 export interface IPositionService {
   getAllByCompany(companyId: string);

@@ -1,9 +1,10 @@
 import { PositionModel } from '../entities/position';
+import { IDriverByCompanyAndCoordinate } from '../http-server/domain/position/interfaces';
 import { CacheProvider } from '../providers/cache';
 import { ICacheProvider } from '../providers/cache/interfaces/ICacheProvider.interfaces';
 import { EXPIRATION_TIME_CACHE } from '../shared/config/cache.constant';
 import { UtilsService } from '../shared/utils/utils.service';
-import { IDriverByCompanyAndCoordinate, IPositionRepository } from './interfaces/IPositionRepository';
+import { IPositionRepository } from './interfaces/IPositionRepository';
 
 export class PositionRepository implements IPositionRepository {
   constructor(private cacheProvider: ICacheProvider) {}

@@ -8,6 +8,7 @@ export const SMSSentSchema = new Schema({
   vehicle: Object,
   phoneNumber: String,
   message: String,
+  createdAt: Date,
 });
 
 export const SMSSentModel = mongoose.model('SMSSent', SMSSentSchema);
