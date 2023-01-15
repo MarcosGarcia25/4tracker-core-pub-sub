@@ -9,6 +9,7 @@ export default class App {
     await this.subscribeService.journeyStart();
     await this.subscribeService.positionTracker();
     await this.subscribeService.trackerCompany();
+    await this.subscribeService.trackerDevice();
   }
 
   async initHttpServer() {

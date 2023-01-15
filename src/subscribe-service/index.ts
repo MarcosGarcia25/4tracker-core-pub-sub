@@ -5,12 +5,14 @@ import { subscribe } from '../providers/pubsub';
 import { ITrackerCompanyService } from '../handler/tracker-company/interfaces/ITrackerCompanyService.interface';
 import { IPositionTrackerService } from '../handler/position-tracker/interfaces/IPositionTrackerService.interface';
 import { IJourneyService } from '../handler/journey/interfaces/IJourneyService.interface';
+import { ITrackerDeviceService } from '../handler/tracker-device/interfaces/ITrackerDeviceService.interface';
 
 export class SubscribeService {
   constructor(
     private trackerCompanyService: ITrackerCompanyService,
     private positionTrackerService: IPositionTrackerService,
     private journeyService: IJourneyService,
+    private trackerDeviceService: ITrackerDeviceService
   ) {}
 
   async positionTracker() {
@@ -26,6 +28,15 @@ export class SubscribeService {
     subscribe(new Redis(CONFIGURE_REDIS_PUBSUB), KeysChannelPubSub.TRACKER_COMPANY, async (payload) => {
       console.log(KeysChannelPubSub.TRACKER_COMPANY, payload);
       await this.trackerCompanyService.store(JSON.parse(payload));
+    })
+      .then(() => console.log('Subscribe Tracker Company running'))
+      .catch(console.error);
+  }
+
+  async trackerDevice() {
+    subscribe(new Redis(CONFIGURE_REDIS_PUBSUB), KeysChannelPubSub.TRACKER_DEVICE, async (payload) => {
+      console.log(KeysChannelPubSub.TRACKER_DEVICE, payload);
+      await this.trackerDeviceService.update(JSON.parse(payload));
     })
       .then(() => console.log('Subscribe Tracker Company running'))
       .catch(console.error);
