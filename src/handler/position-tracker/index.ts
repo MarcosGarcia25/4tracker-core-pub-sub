@@ -94,7 +94,7 @@ export class PositionTrackerService implements IPositionTrackerService {
       _id: -1,
     });
 
-    const lastHistoryJourney = journey?.journey?.journeyHistory?.slice(-1)[0];
+    const lastHistoryJourney = journey?.journey?.journeyHistory?.slice(-1);
 
     return { journey, lastHistoryJourney };
   }
