@@ -39,7 +39,7 @@ export class PositionTrackerService implements IPositionTrackerService {
             tracker: tracker.tracker,
             userId: journey?.user ? journey?.user?.id : '',
             journeyId: journey?.journey ? journey?.journey?.id : '',
-            lastJourneyStatus: journey?.journey ? lastHistoryJourney?.status : '',
+            lastJourneyStatus: journey?.journey ? lastHistoryJourney[0]?.status : '',
             user: journey?.user ? journey?.user : {},
             journey: journey?.journey ? journey?.journey : {},
             createdAt: coordinate.createdAt,
@@ -94,7 +94,9 @@ export class PositionTrackerService implements IPositionTrackerService {
       _id: -1,
     });
 
-    const lastHistoryJourney = journey?.journey?.journeyHistory?.slice(-1);
+    const lastHistoryJourney = journey?.journey?.journeyHistory?.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
 
     return { journey, lastHistoryJourney };
   }
