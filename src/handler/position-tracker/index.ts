@@ -25,8 +25,7 @@ export class PositionTrackerService implements IPositionTrackerService {
           });
 
           const lastHistoryJourney = journey?.journey?.journeyHistory?.sort(
-            // @ts-ignore
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
           );
 
           await PositionModel.updateMany({ vehicleId: tracker?.vehicleId }, { isNewPosition: false });
