@@ -152,6 +152,7 @@ export class PositionRepository implements IPositionRepository {
             journeyId: { $last: '$journeyId' },
             user: { $last: '$user' },
             journey: { $last: '$journey' },
+            lastJourneyStatus: { $last: '$lastJourneyStatus' },
           },
         },
       ]);
