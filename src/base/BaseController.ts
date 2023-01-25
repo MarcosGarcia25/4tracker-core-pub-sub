@@ -16,6 +16,7 @@ export class BaseController {
       code: error.code,
       message: error.message,
     };
+    console.log('[REQUEST ERROR]', errorResponse);
     return response.status(error.statusCode || HttpStatus.EXPECTATION_FAILED).json(errorResponse);
   }
 
