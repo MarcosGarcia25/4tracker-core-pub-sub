@@ -11,12 +11,13 @@ export class SmsProvider {
   }
 
   async send(message: string, numberTo: string): Promise<any> {
-    console.log('[SMS SEND]', {
+    await this.client.messages.create({
       from: this.handleNumber(twilioNumber),
       to: this.handleNumber(numberTo),
       body: message,
     });
-    await this.client.messages.create({
+
+    console.log('[SMS SEND]', {
       from: this.handleNumber(twilioNumber),
       to: this.handleNumber(numberTo),
       body: message,
