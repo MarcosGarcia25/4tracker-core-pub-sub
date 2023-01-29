@@ -4,7 +4,7 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioNumber = process.env.TWILIO_PHONE_NUMBER;
 
 export class SmsProvider {
-  client: Twilio;
+  private client: Twilio;
 
   constructor() {
     this.client = new Twilio(accountSid, authToken);
