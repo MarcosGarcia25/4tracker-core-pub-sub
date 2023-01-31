@@ -7,19 +7,19 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export class DateUtilService implements IDateUtilService {
-  createDateUTC(input: Dayjs = dayjs()) {
+  createDateUTC(input: string): dayjs.Dayjs {
     return this.createDate(input).utc();
   }
 
-  createDate(input: Dayjs = dayjs()) {
+  createDate(input: string): dayjs.Dayjs {
     return dayjs(input);
   }
 
-  unixToDate(input: number) {
+  unixToDate(input: number): Date {
     return dayjs.unix(input).toDate();
   }
 
-  unixToTimestamp(input: number) {
+  unixToTimestamp(input: number): dayjs.Dayjs {
     return dayjs.unix(input);
   }
 }

@@ -8,8 +8,8 @@ export interface IDriverByCompanyAndCoordinate {
 
 export interface IFindByVehicleAndPeriod {
   vehicleId: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 }
 
 export enum JourneyStatus {

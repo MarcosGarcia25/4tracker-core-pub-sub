@@ -1,10 +1,13 @@
 import { BaseService } from '../../base/BaseService';
 import { IPositionRepository } from '../../repositories/interfaces/IPositionRepository';
+import { ErrorCode } from '../../shared/enum/ErrorCode.enum';
+import { HttpStatus } from '../../shared/enum/HttpStatus.enum';
+import { IDateUtilService } from '../../shared/utils/interfaces/IDateUtilService.interface';
 import { IDriverByCompanyAndCoordinate, IFindByVehicleAndPeriod } from '../domain/position/interfaces';
 import { IPositionService } from './interfaces/IPositionService.interface';
 
 export class PositionService extends BaseService implements IPositionService {
-  constructor(private positionRepository: IPositionRepository) {
+  constructor(private positionRepository: IPositionRepository, private dateUtilService: IDateUtilService) {
     super();
   }
 
