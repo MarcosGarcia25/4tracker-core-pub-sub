@@ -7,7 +7,7 @@ import { IDriverByCompanyAndCoordinate, IFindByVehicleAndPeriod } from '../domai
 import { IPositionService } from './interfaces/IPositionService.interface';
 
 export class PositionService extends BaseService implements IPositionService {
-  constructor(private positionRepository: IPositionRepository, private dateUtilService: IDateUtilService) {
+  constructor(private positionRepository: IPositionRepository) {
     super();
   }
 
