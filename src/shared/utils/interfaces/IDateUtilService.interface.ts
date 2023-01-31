@@ -1,8 +1,6 @@
-import { Dayjs } from 'dayjs';
-
 export interface IDateUtilService {
-  createDateUTC(input?: Dayjs);
-  createDate(input?: Dayjs);
+  createDateUTC(input: string);
+  createDate(input: string);
   unixToDate(input?: number);
   unixToTimestamp(input: number);
 }

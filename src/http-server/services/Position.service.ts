@@ -7,7 +7,7 @@ import { IDriverByCompanyAndCoordinate, IFindByVehicleAndPeriod } from '../domai
 import { IPositionService } from './interfaces/IPositionService.interface';
 
 export class PositionService extends BaseService implements IPositionService {
-  constructor(private positionRepository: IPositionRepository) {
+  constructor(private positionRepository: IPositionRepository, private dateUtilService: IDateUtilService) {
     super();
   }
 
@@ -24,6 +24,19 @@ export class PositionService extends BaseService implements IPositionService {
   }
 
   async getAllByVehicleAndPeriod(payload: IFindByVehicleAndPeriod) {
+    const limitHour = 24;
+    if (this.dateUtilService.createDate(payload.endDate).diff(payload.startDate) > 1000 * 60 * 60 * limitHour) {
+      throw this.error(
+        HttpStatus.BAD_REQUEST,
+        `A data e hora deve estar dentro de ${limitHour} horas`,
+        ErrorCode.ERROR_FIELD,
+      );
+    }
+
+    if (this.dateUtilService.createDate(payload.endDate).diff(payload.startDate) < 0) {
+      throw this.error(HttpStatus.BAD_REQUEST, `A data inicial deve ser menor que a final`, ErrorCode.ERROR_FIELD);
+    }
+
     return await this.positionRepository.findByVehicleAndPeriod(payload);
   }
 }
