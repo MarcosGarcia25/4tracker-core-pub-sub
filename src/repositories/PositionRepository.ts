@@ -1,5 +1,5 @@
 import { PositionModel } from '../entities/position';
-import { IDriverByCompanyAndCoordinate } from '../http-server/domain/position/interfaces';
+import { IDriverByCompanyAndCoordinate, IFindByVehicleAndPeriod } from '../http-server/domain/position/interfaces';
 import { CacheProvider } from '../providers/cache';
 import { ICacheProvider } from '../providers/cache/interfaces/ICacheProvider.interfaces';
 import { EXPIRATION_TIME_CACHE } from '../shared/config/cache.constant';
@@ -164,6 +164,16 @@ export class PositionRepository implements IPositionRepository {
     }
 
     return positions;
+  }
+
+  async findByVehicleAndPeriod(payload: IFindByVehicleAndPeriod) {
+    return await PositionModel.find({
+      vehicleId: payload.vehicleId,
+      timestamp: {
+        $gte: new Date(payload.startDate).toISOString(),
+        $lt: new Date(payload.startDate).toISOString(),
+      },
+    });
   }
 
   private removeKeyGroup(positions: Array<any>) {

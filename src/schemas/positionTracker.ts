@@ -31,4 +31,24 @@ const lastVehicleByCompanyCoordinateSchema = async (request: Request, response: 
   next();
 };
 
-export { lastVehicleByCompanyCoordinateSchema };
+const findDriverByVehicleAndPeriodSchema = async (request: Request, response: Response, next: NextFunction) => {
+  const schema = Joi.object().keys({
+    vehicleId: Joi.string().uuid().label('vehicleId').required().messages(messagesSchemas),
+    startDate: Joi.date().label('startDate').required().messages(messagesSchemas),
+    endDate: Joi.date().label('endDate').required().messages(messagesSchemas),
+  });
+
+  const validate = schema.validate(request.query);
+
+  if (validate.error) {
+    const errorHandler = validate.error.details.map((err) => err.message);
+    return response.status(HttpStatus.BAD_REQUEST).json({
+      code: ErrorCode.ERROR_FIELD,
+      message: errorHandler,
+    });
+  }
+
+  next();
+};
+
+export { lastVehicleByCompanyCoordinateSchema, findDriverByVehicleAndPeriodSchema };

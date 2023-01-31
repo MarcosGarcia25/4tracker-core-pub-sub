@@ -6,6 +6,12 @@ export interface IDriverByCompanyAndCoordinate {
   status: JourneyStatus;
 }
 
+export interface IFindByVehicleAndPeriod {
+  vehicleId: string;
+  startDate: Date;
+  endDate: Date;
+}
+
 export enum JourneyStatus {
   DRIVING = 'DRIVING',
   FINISHED = 'FINISHED',
