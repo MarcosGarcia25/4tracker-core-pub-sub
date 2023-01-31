@@ -167,25 +167,38 @@ export class PositionRepository implements IPositionRepository {
   }
 
   async findByVehicleAndPeriod(payload: IFindByVehicleAndPeriod) {
-    return await PositionModel.find(
-      {
-        vehicleId: payload.vehicleId,
-        timestamp: {
-          $gte: new Date(payload.startDate).toISOString(),
-          $lt: new Date(payload.endDate).toISOString(),
+    let positions = null;
+
+    const keyCache = UtilsService.buildKeyForCacheWithParams('positions:period', payload);
+    const positionsCache = await this.cacheProvider.get(keyCache);
+
+    if (positionsCache) {
+      positions = JSON.parse(positionsCache);
+    } else {
+      positions = await PositionModel.find(
+        {
+          vehicleId: payload.vehicleId,
+          timestamp: {
+            $gte: new Date(payload.startDate).toISOString(),
+            $lt: new Date(payload.endDate).toISOString(),
+          },
         },
-      },
-      {
-        trackerId: 1,
-        latitude: 1,
-        longitude: 1,
-        speed: 1,
-        vehicleId: 1,
-        userId: 1,
-        createdAt: 1,
-        timestamp: 1,
-      },
-    ).sort({ timestamp: -1 });
+        {
+          trackerId: 1,
+          latitude: 1,
+          longitude: 1,
+          speed: 1,
+          vehicleId: 1,
+          userId: 1,
+          createdAt: 1,
+          timestamp: 1,
+        },
+      ).sort({ timestamp: -1 });
+
+      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(positions));
+    }
+
+    return positions;
   }
 
   private removeKeyGroup(positions: Array<any>) {
