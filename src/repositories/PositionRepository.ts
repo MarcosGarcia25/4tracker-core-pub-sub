@@ -167,13 +167,29 @@ export class PositionRepository implements IPositionRepository {
   }
 
   async findByVehicleAndPeriod(payload: IFindByVehicleAndPeriod) {
-    return await PositionModel.find({
-      vehicleId: payload.vehicleId,
-      timestamp: {
-        $gte: new Date(payload.startDate).toISOString(),
-        $lt: new Date(payload.endDate).toISOString(),
+    return await PositionModel.find(
+      {
+        vehicleId: payload.vehicleId,
+        timestamp: {
+          $gte: new Date(payload.startDate).toISOString(),
+          $lt: new Date(payload.endDate).toISOString(),
+        },
       },
-    });
+      {
+        trackerId: 1,
+        latitude: 1,
+        longitude: 1,
+        speed: 1,
+        vehicleId: 1,
+        vehicle: 1,
+        journey: 1,
+        journeyId: 1,
+        user: 1,
+        userId: 1,
+        createdAt: 1,
+        timestamp: 1,
+      },
+    ).sort({ timestamp: -1 });
   }
 
   private removeKeyGroup(positions: Array<any>) {
