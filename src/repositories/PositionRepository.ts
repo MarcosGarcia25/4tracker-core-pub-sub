@@ -167,6 +167,13 @@ export class PositionRepository implements IPositionRepository {
   }
 
   async findByVehicleAndPeriod(payload: IFindByVehicleAndPeriod) {
+    console.log({
+      vehicleId: payload.vehicleId,
+      timestamp: {
+        $gte: new Date(payload.startDate).toISOString(),
+        $lt: new Date(payload.endDate).toISOString(),
+      },
+    });
     return await PositionModel.find({
       vehicleId: payload.vehicleId,
       timestamp: {
