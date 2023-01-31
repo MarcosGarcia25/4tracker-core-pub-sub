@@ -169,10 +169,10 @@ export class PositionRepository implements IPositionRepository {
   async findByVehicleAndPeriod(payload: IFindByVehicleAndPeriod) {
     return await PositionModel.find({
       vehicleId: payload.vehicleId,
-      timestamp: {
-        $gte: new Date(payload.startDate),
-        $lt: new Date(payload.startDate),
-      },
+      // timestamp: {
+      //   $gte: new Date(payload.startDate),
+      //   $lt: new Date(payload.startDate),
+      // },
     });
   }
 
