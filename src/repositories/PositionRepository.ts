@@ -193,7 +193,7 @@ export class PositionRepository implements IPositionRepository {
           createdAt: 1,
           timestamp: 1,
         },
-      ).sort({ timestamp: -1 });
+      ).sort({ timestamp: 1 });
 
       await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_HOUR, JSON.stringify(positions));
     }
