@@ -15,7 +15,7 @@ export class PermissionMiddleware {
 
     if (token) {
       const data = await securityProvider.jwtDecode(token);
-      const expired = date.createDate().isAfter(date.unixToDate(data?.payload['exp']));
+      const expired = date.createDate(new Date().toISOString()).isAfter(date.unixToDate(data?.payload['exp']));
 
       if (expired) {
         return response.status(HttpStatus.UNAUTHORIZED).json({
