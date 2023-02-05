@@ -27,6 +27,7 @@ export const PositionSchema = new Schema({
   vehicleId: String,
   vehicle: Object,
   tracker: Object,
+  trackerState: String,
   createdAt: Date,
   userId: String,
   journeyId: String,

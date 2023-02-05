@@ -18,6 +18,7 @@ export interface ICoordinatesPayload {
   createdAt: Date;
   vehicle: Vehicle;
   tracker: Tracker;
+  trackerState: string;
   user?: object;
   journey?: object;
   timestamp: Date;
