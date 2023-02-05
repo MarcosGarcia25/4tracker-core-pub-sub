@@ -31,7 +31,7 @@ export class SmsService extends BaseService implements ISmsService {
 
     console.log('[sendCommand]', trackerCommand);
 
-    await smsProvider.send(trackerCommand?.command, payload.phoneNumber);
+    // await smsProvider.send(trackerCommand?.command, payload.phoneNumber);
 
     return await SMSSentModel.create(payload);
   }
