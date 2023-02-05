@@ -27,7 +27,11 @@ export class SmsService extends BaseService implements ISmsService {
     payload.phoneNumber = tracker.tracker?.phoneNumber;
     payload.createdAt = new Date().toISOString();
 
-    await smsProvider.send(payload.message, payload.phoneNumber);
+    const command = [...tracker.tracker?.device?.commands].find(
+      (command) => command.label === payload.message,
+    )?.command;
+
+    await smsProvider.send(command, payload.phoneNumber);
 
     return await SMSSentModel.create(payload);
   }

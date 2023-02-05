@@ -7,3 +7,8 @@ export interface SentCommand {
   message: string;
   createdAt: string;
 }
+
+export enum CommandType {
+  BLOCK = 'BLOCK',
+  UNLOCK = 'UNLOCK',
+}
