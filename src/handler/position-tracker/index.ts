@@ -19,6 +19,8 @@ export class PositionTrackerService implements IPositionTrackerService {
       if (coordinate?.id) {
         const tracker = await this.getTrackerById(coordinate.id);
 
+        console.log(tracker)
+
         if (tracker) {
           const { journey, lastHistoryJourney } = await this.getJourneyByVehicle(tracker?.vehicleId);
 
