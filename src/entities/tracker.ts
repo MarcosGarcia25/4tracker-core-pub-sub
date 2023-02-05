@@ -14,6 +14,7 @@ export const TrackerSchema = new Schema({
     enum: VehicleTrackerHistoryStatus,
     default: VehicleTrackerHistoryStatus.ACTIVE,
   },
+  state: String,
 });
 
 export const TrackerModel = mongoose.model('Tracker', TrackerSchema);

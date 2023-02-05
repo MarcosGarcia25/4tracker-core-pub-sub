@@ -4,7 +4,7 @@ import { TrackerModel } from '../../entities/tracker';
 import { SmsProvider } from '../../providers/SmsProvider';
 import { ErrorCode } from '../../shared/enum/ErrorCode.enum';
 import { HttpStatus } from '../../shared/enum/HttpStatus.enum';
-import { SentCommand } from '../domain/sms/interfaces';
+import { CommandEligibleSave, SentCommand } from '../domain/sms/interfaces';
 import { ISmsService } from './interfaces/ISmsService.interface';
 
 export class SmsService extends BaseService implements ISmsService {
@@ -31,6 +31,10 @@ export class SmsService extends BaseService implements ISmsService {
 
     if (trackerCommand) {
       await smsProvider.send(trackerCommand?.command, payload.phoneNumber);
+
+      if(CommandEligibleSave.includes(payload.message)) {
+        await TrackerModel.updateMany({ trackerId: payload.trackerId }, { state: payload.message });
+      }
     }
 
     return await SMSSentModel.create(payload);

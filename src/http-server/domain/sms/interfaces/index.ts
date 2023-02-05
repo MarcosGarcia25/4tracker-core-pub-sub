@@ -12,3 +12,5 @@ export enum CommandType {
   BLOCK = 'BLOCK',
   UNLOCK = 'UNLOCK',
 }
+
+export const CommandEligibleSave = ['BLOCK', 'UNLOCK'];
