@@ -29,7 +29,7 @@ export class SmsService extends BaseService implements ISmsService {
 
     // const trackerCommand = [...tracker.tracker?.device?.commands]
 
-    console.log('[sendCommand]', tracker.tracker);
+    console.log('[sendCommand]', tracker.tracker?.device?.commands);
 
     // await smsProvider.send(trackerCommand?.command, payload.phoneNumber);
 
