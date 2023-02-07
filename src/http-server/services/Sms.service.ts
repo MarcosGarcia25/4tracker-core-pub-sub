@@ -29,12 +29,14 @@ export class SmsService extends BaseService implements ISmsService {
 
     const trackerCommand = [...tracker.tracker?.device?.commands].find((command) => command.label === payload.message);
 
-    if (trackerCommand) {
-      await smsProvider.send(trackerCommand?.command, payload.phoneNumber);
+    if (!trackerCommand) {
+      throw this.error(HttpStatus.NOT_FOUND, 'Comando não encontrado.', ErrorCode.TRACKER_GET_FAILED);
+    }
 
-      if(CommandEligibleSave.includes(payload.message)) {
-        await TrackerModel.updateMany({ trackerId: payload.trackerId }, { state: payload.message });
-      }
+    await smsProvider.send(trackerCommand?.command, payload.phoneNumber);
+
+    if (CommandEligibleSave.includes(payload.message)) {
+      await TrackerModel.updateMany({ trackerId: payload.trackerId }, { state: payload.message });
     }
 
     return await SMSSentModel.create(payload);
