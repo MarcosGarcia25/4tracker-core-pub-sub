@@ -51,7 +51,7 @@ export class PositionRepository implements IPositionRepository {
 
       positions = this.removeKeyGroup(positions);
 
-      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TWO_MINUTE, JSON.stringify(positions));
+      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.FIVE_MINUTES, JSON.stringify(positions));
     }
 
     return positions;
@@ -112,7 +112,7 @@ export class PositionRepository implements IPositionRepository {
       ]);
 
       positions = this.removeKeyGroup(positions);
-      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TRIRTY_SECONDS, JSON.stringify(positions));
+      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.ONE_MINUTE, JSON.stringify(positions));
     }
 
     return positions;
@@ -163,7 +163,7 @@ export class PositionRepository implements IPositionRepository {
 
       positions = this.removeKeyGroup(positions);
 
-      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TWO_MINUTE, JSON.stringify(positions));
+      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TEN_MINUTES, JSON.stringify(positions));
     }
 
     return positions;

@@ -40,7 +40,7 @@ export class JourneyRepository implements IJourneyRepository {
 
       journey = this.removeKeyGroup(journey);
 
-      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.TWO_MINUTE, JSON.stringify(journey));
+      await this.cacheProvider.setEx(keyCache, EXPIRATION_TIME_CACHE.FIVE_MINUTES, JSON.stringify(journey));
     }
 
     return journey;
